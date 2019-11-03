@@ -1,0 +1,383 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+.title
+{
+  flex-shrink:1;
+}
+.login-button{
+  float:right;
+}
+
+
+/**************************************** register ***************************************/
+
+
+.registerPage{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+
+
+.registerCard {
+  
+  width: 50%;
+  height: 650px;
+ 
+  display: flex;
+  
+  justify-content: center;
+}
+.registrationButton{
+  float: right;
+}
+.success-register{
+  margin-top: 70px;
+  display:flex;
+  justify-content: left;
+}
+.dispaly-box{
+  margin-top: -90px;
+  display: flex;
+  justify-content: center;
+}
+.register-fundoo {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  text-shadow: 1px 1px 2px #3e2723, 0 0 25px #d1c4e9, 0 0 5px #827717;
+}
+
+.register-names {
+  margin-top: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: fit-content;
+  height: max-content
+}
+.cardView{
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+}
+.register-h1 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.register-h2 {
+ 
+  display: flex;
+  justify-content: center;
+  
+
+}
+.field-pos{
+  display:flex;
+  justify-content: center;
+}
+
+.button-pos{
+  display: flex;
+  justify-content: flex-start ;
+  margin-left: 300px;
+}
+.register-email {
+  /* padding-left: 10px;
+  padding-left: 100px;
+  padding-right: 100px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.register-password {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+/* .register-cardtag{
+  width: 965px;
+  display: flex;
+} */
+ .register-submitButton {
+   /* display: flex;
+  justify-content: space-evenly;  */
+  margin-top: 19px;
+  margin-bottom: 29px;
+  margin-left: 212px;
+  
+  
+}  
+.register-cancelButton{
+  margin-top: 19px;
+  margin-bottom: 29px;
+  margin-left: 520px;
+}
+/* .button{
+  margin-top: 35px;
+  margin-bottom: 10px;
+  margin-left: -10px;
+} */
+.firstname,.lastname,.moblenumber,.email,.password{
+  width: 300px;
+}
+.registerPage{
+  display: flex;
+  justify-content: center;
+}
+.reset-h2{
+  margin-top: 70px;
+    display: flex;
+    justify-content: center;
+}
+
+/**********login*********/
+.loginPage{
+  display:flex;
+  justify-content: center;
+}
+.login-names{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.forgot-card{
+  width:50%;
+  height:40%;
+  /* margin-top: 70px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.loginCard{
+  
+  width: 40%;
+  height: 400px;
+ 
+  display: flex;
+  
+  justify-content: center;
+}
+
+.login-h2{
+  margin-top:40px;
+  display: flex;
+  justify-content: center;
+}
+
+.display-box{
+  flex-direction: column;
+    display: flex;
+    justify-content: center;
+    width: fit-content;
+
+}
+.login-content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.button{
+  display: flex;
+}
+/***********************************Forgot-password-Button***************************/
+.Forgot-password-Button{
+ display: flex;
+}
+
+.forgot-password{
+  display: flex;
+  justify-content: center;
+}
+.forgot-h2{
+  margin-top: 30px;
+}
+.forgot-content{
+  display : flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.forgot-link{
+  padding-top: 10px;
+padding-left: 10px;
+}
+.fp-div{
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+}
+.fp-head{
+  justify-content: flex-start;
+  display: flex;
+  width: 67%;
+  font-size: 23px;
+
+}
+.resetPage{
+  height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.resetCard{
+  width:40%;
+  display:flex;
+justify-content: center;
+flex-direction: column;
+}
+.in-dashboard{
+  margin-top: 60px;
+}
+.view{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.register-link{
+  padding-top: 10px;
+  padding-left: 30px; 
+}
+.cancel-button{
+  float: right;
+}
+.reset-button{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+.password-field{
+  display: flex;
+  justify-content: center;
+}
+.search{
+  height:40px;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+flex-direction: row;
+background: cyan;
+border-radius: 18px;
+/* -webkit-writing-mode: vertical-lr; */
+}
+.appBar{
+  display:flex;
+  justify-content: center;
+  flex-direction: row;
+
+}
+/*****************************SideNav**********************************/
+/* .sideNav{
+  width:30%;
+  display: flex;
+  margin-top:50px;
+} */
+.drawer-item{
+  margin-top: 75px;
+}
+.label {
+  height:fit-content;
+  display: flex;
+  font-size: 15px;
+  padding: 20px;
+}
+/**************************************note****************************************/
+.notecard {
+  display: flex;
+  height: auto;
+  width: 40vw;
+  padding: 5px;
+  flex-wrap: wrap;
+}
+.noteTake {
+  /* display: flex; */
+  height: auto;
+  width: 40vw;
+  min-width: 266px;
+}
+.note-comp{
+  display: flex;
+  justify-content: center;
+  margin-top: 90px;
+  height:fit-content;
+}
+.note-display{
+  width: 300px;
+  height: fit-content;
+  display:flex;
+ 
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 10px;
+}
+.allNotePage{
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+
+}
+/**********************************************Dialog**********************************************/
+.note-dialog{
+  display:flex;
+  flex-direction: column;
+  height:auto;
+  width:300px;
+  margin:18px;
+}
+.button-close{
+  display: flex;
+  justify-content:flex-end;
+}
+/************************************Dialog-Label***********************************************/
+.dialog-label{
+  display:flex;
+ 
+}
+/*************************toolbar***********************************************/
+.toolbar{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+/*******************************allUnThrashNotePage************************************/
+.allUnThrashNotePage{
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  
+}

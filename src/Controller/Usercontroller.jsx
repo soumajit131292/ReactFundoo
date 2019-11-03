@@ -1,0 +1,56 @@
+
+import axios from 'axios';
+
+
+export function Usercontroller(userRegister) {
+    const baseUrl = process.env.REACT_APP_BASE_URL;
+
+    let header = {
+        'Content-Type': 'application/json'
+    }
+    return axios.post("http://localhost:8080/" + 'user/register', userRegister, { header: header });
+}
+
+
+
+
+export function userLogin(userLogin) {
+    const baseUrl = process.env.BASE_URL;
+
+    let header = {
+        'Content-Type': 'application/json'
+    }
+    return axios.post("http://localhost:8080/" + 'user/login', userLogin, { header: header });
+}
+export function emailVerify(userEmailVerify) {
+    const baseUrl = process.env.BASE_URL;
+
+    let header = {
+        'Content-Type': 'application/json'
+    }
+    return axios.post("http://localhost:8080/" + 'user/forgotpassword', userEmailVerify, { header: header });
+}
+
+export function userPasswordReset(userPassword,userToken) {
+    const baseUrl = process.env.BASE_URL;
+    let token=userToken;
+    console.log(token)
+
+    let header = {
+        'Content-Type': 'application/json'
+    }
+    return axios.put('http://localhost:8080/user/resetpassword/'+token, userPassword, { header: header });
+}
+
+export function userVerify(userToken) {
+    const baseUrl = process.env.BASE_URL;
+    let token=userToken;
+    console.log(token)
+
+    let header = {
+        'Content-Type': 'application/json'
+    }
+    
+    return axios.put('http://localhost:8080/user/verify/'+token, null,{ header: header });
+    
+}
