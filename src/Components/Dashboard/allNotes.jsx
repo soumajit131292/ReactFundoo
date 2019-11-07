@@ -3,13 +3,13 @@ import { NoteController } from '../../Controller/NoteController';
 import { InputBase, Card, Tooltip, TextField } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
+
 import Dialog from '@material-ui/core/Dialog';
-import Typography from '@material-ui/core/Typography';
+
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
-import { updateNote } from '../../Controller/NoteController';
+
 import More from './more';
 import Collaborator from '../Dashboard/collaborator';
 import { AppBar, Toolbar, IconButton, ClickAwayListener } from '@material-ui/core';
@@ -124,14 +124,22 @@ export default class allNotes extends Component {
                             </CardContent>
                             <CardContent>
                                 {keys.description}<br/>
-                                {keys.colab.map((item) =>{
+                                <div>
+                                {keys.labels.map((labela) =>{
                                     
-                                    return ( <div key={item.colabId}>{item === null? '':
-                                    <Chip  label=  {item.userEmailId} variant="outlined"/>}
+                                    return ( <div key={labela.id}>{labela === null? '':
+                                    <Chip  label=  {labela.labelName} variant="outlined"/>}
                                     </div> );
                                     
                                 })}
-                                
+                                {keys.colab.map((colab) =>{
+                                    
+                                    return ( <div key={colab.colabId}>{colab === null? '':
+                                    <Chip  label=  {colab.userEmailId} variant="outlined"/>}
+                                    </div> );
+                                    
+                                })}
+                                </div>
                             </CardContent>
                         </div>
                         <CardActions  >
@@ -181,3 +189,4 @@ export default class allNotes extends Component {
         )
     }
 }
+ 
