@@ -14,7 +14,7 @@ import More from './more';
 import Collaborator from '../Dashboard/collaborator';
 import { AppBar, Toolbar, IconButton, ClickAwayListener } from '@material-ui/core';
 import Chip from '@material-ui/core/Chip';
-
+import Remainder from '../Dashboard/remainder';
 import Archive from '../Dashboard/archive';
 
 const themes = createMuiTheme({
@@ -35,7 +35,7 @@ const themes = createMuiTheme({
         }
     }
 })
-export default class allNotes extends Component {
+ class AllNotes extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -143,6 +143,7 @@ export default class allNotes extends Component {
                             </CardContent>
                         </div>
                         <CardActions  >
+                            <Remainder />
                             <Collaborator noteId={keys}/>
                             <Archive note={keys.id}/>
                             <More noteId={keys.id} />
@@ -167,6 +168,7 @@ export default class allNotes extends Component {
                                     onChange={this.handleDescription}
                                 /></CardContent>
                             <CardActions>
+                            <Remainder />
                             <Collaborator noteId={keys}/>
                             
                                 
@@ -174,12 +176,13 @@ export default class allNotes extends Component {
                             <Archive note={keys.id}/>
                                 <More noteId={keys.id} />
                                 <Button className="button-close" style={{float: "right "} } onClick={this.closeDialog}>Close</Button>
+                               
                             </CardActions>
                         </Card >
                     </Dialog>
-                </div >
+                  </div >
             )
-        })
+        });
         return (
             <div className="allNotePage">
                 <MuiThemeProvider theme={themes}>
@@ -189,4 +192,4 @@ export default class allNotes extends Component {
         )
     }
 }
- 
+export default withRouter(AllNotes)
