@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import UnarchiveOutlinedIcon from '@material-ui/icons/UnarchiveOutlined';
 import { getArchivedNotes } from '../../Controller/NoteController';
 import { InputBase, Card, Tooltip, TextField } from '@material-ui/core';
-
+import Chip from '@material-ui/core/Chip';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 import Dialog from '@material-ui/core/Dialog';
@@ -124,7 +124,15 @@ class UnArchieve extends Component {
                                 {keys.title}
                             </CardContent>
                             <CardContent>
-                                {keys.description}
+                                {keys.description}<br/>
+                                {keys.colab.map((item)=> {
+                                    
+                                    return (
+                                    <Chip label=  {item.userEmailId} variant="outlined"/>
+                                      );
+                                    
+                                })}
+                                
                             </CardContent>
                         </div>
                         <CardActions  >

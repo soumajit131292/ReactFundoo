@@ -33,11 +33,10 @@ class Note extends Component {
         })
     }
     handleClickClose = () => {
-        console.log(this.state.title)
-        console.log(this.state.description)
+        // console.log(this.state.title)
+        // console.log(this.state.description)
         if (this.state.title === "" && this.state.description === "") {
            return this.setState({
-            
                 windowOpen: !this.state.windowOpen,
             })
          }
@@ -53,11 +52,12 @@ class Note extends Component {
                 title: this.state.title,
                 description: this.state.description,
             }
+            console.log("yes");
+            // this.props.noteToDashboard(note);
             createNote(note).then((response) => {
                 
             }).catch((err)=>{
                 console.log('err',err.response.data.message)
-
             });
         }
     }

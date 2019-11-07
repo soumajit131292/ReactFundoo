@@ -93,11 +93,10 @@ const themes = createMuiTheme({
                             <IconButton >
                                 <RefreshOutlinedIcon />
                             </IconButton>
+                            <IconButton >
                             {this.state.view ? <ViewStreamOutlinedIcon onClick={this.handleViewOpen} className="viewIcon" />
                                 : <AppsOutlinedIcon onClick={this.handleViewOpen} className="viewIcon" />}
-                            {/* <IconButton>
-                                <SettingsOutlinedIcon />
-                            </IconButton> */}
+                            </IconButton>
                             </div>
                         <AppsOutlinedIcon onClick={this.handleViewOpen} className="viewIcon" />
                         <div className="profile" >

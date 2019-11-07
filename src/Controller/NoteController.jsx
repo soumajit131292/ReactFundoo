@@ -1,4 +1,4 @@
-import React from 'react';
+
 import axios from 'axios';
 
 const headers={
@@ -57,3 +57,4 @@ export function archiveNote(noteId)
 export function getArchivedNotes(){
     return axios.get('http://localhost:8080/notes/getarchivenotes',{ headers : headers });
 }
+

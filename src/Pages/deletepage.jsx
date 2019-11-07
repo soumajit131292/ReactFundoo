@@ -7,20 +7,17 @@ import DeletNote from '../Components/Dashboard/deletNote';
 
 
 export default class deletepage extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state={
+        this.state = {
             deletPage: true
         }
     }
     render() {
         return (
             <div>
-        
-
-              <Appbar/>
+                <Appbar />
                 <DeletNote trigger={this.state.deletPage} />
-              
             </div>
         )
     }

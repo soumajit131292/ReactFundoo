@@ -11,8 +11,9 @@ import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import { updateNote } from '../../Controller/NoteController';
 import More from './more';
-
+import Collaborator from '../Dashboard/collaborator';
 import { AppBar, Toolbar, IconButton, ClickAwayListener } from '@material-ui/core';
+import Chip from '@material-ui/core/Chip';
 
 import Archive from '../Dashboard/archive';
 
@@ -44,6 +45,7 @@ export default class allNotes extends Component {
             description: '',
             notes: [],
             openDialog: false,
+            colabs:[],
         }
 
     }
@@ -57,8 +59,17 @@ export default class allNotes extends Component {
                 notes: res.data,
             })
             console.log('data', this.state.notes)
+            console.log('colab', this.state.colabs)
         }
         )
+    }
+    updateCard=(note)=>{
+        console.log("new note",note);
+        
+        var updatedNotes=[...this.state.notes,note];
+        this.setState({
+            notes:updatedNotes
+        })
     }
     handleTitleChange = (event) => {
         this.setState({
@@ -96,9 +107,9 @@ export default class allNotes extends Component {
 
                 openDialog: !this.state.openDialog,
             })
-            updateNote(editedNote, this.state.id).then((res) => {
-                console.log(res.data);
-            })
+            // updateNote(editedNote, this.state.id).then((res) => {
+            //     console.log(res.data);
+            // })
         }
     }
 
@@ -112,14 +123,21 @@ export default class allNotes extends Component {
                                 {keys.title}
                             </CardContent>
                             <CardContent>
-                                {keys.description}
+                                {keys.description}<br/>
+                                {keys.colab.map((item) =>{
+                                    
+                                    return ( <div key={item.colabId}>{item === null? '':
+                                    <Chip  label=  {item.userEmailId} variant="outlined"/>}
+                                    </div> );
+                                    
+                                })}
+                                
                             </CardContent>
                         </div>
                         <CardActions  >
-                            <IconButton style={{ padding: "0px" }} >
-                                <More noteId={keys.id} />
-                            </IconButton>
+                            <Collaborator noteId={keys}/>
                             <Archive note={keys.id}/>
+                            <More noteId={keys.id} />
                         </CardActions>
                     </Card >
                     <Dialog open={this.state.openDialog} >
@@ -129,6 +147,7 @@ export default class allNotes extends Component {
                                     type="text"
                                     multiline
                                     
+
                                     value={this.state.title}
                                     onChange={this.handleTitleChange}
                                 /></CardContent>
@@ -140,8 +159,13 @@ export default class allNotes extends Component {
                                     onChange={this.handleDescription}
                                 /></CardContent>
                             <CardActions>
+                            <Collaborator noteId={keys}/>
+                            
+                                
+                            
+                            <Archive note={keys.id}/>
                                 <More noteId={keys.id} />
-                                <Button className="button-close" onClick={this.closeDialog}>Close</Button>
+                                <Button className="button-close" style={{float: "right "} } onClick={this.closeDialog}>Close</Button>
                             </CardActions>
                         </Card >
                     </Dialog>

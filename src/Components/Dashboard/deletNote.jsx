@@ -14,7 +14,7 @@ import { updateNote } from '../../Controller/NoteController';
 import More from './more';
 import { AppBar, Toolbar, IconButton, ClickAwayListener } from '@material-ui/core';
 import MoreTrash from '../Dashboard/moreTrash';
-
+import Chip from '@material-ui/core/Chip';
 const themes = createMuiTheme({
     overrides: {
         MuiPaper: {
@@ -75,7 +75,14 @@ class DeletNote extends Component {
                                 {keys.title}
                             </CardContent>
                             <CardContent>
-                                {keys.description}
+                                {keys.description}<br/>
+                                {keys.colab.map((item)=> {
+                                    
+                                    return (
+                                    <Chip label=  {item.userEmailId} variant="outlined"/>
+                                      );
+                                    
+                                })}
                             </CardContent>
                         </div>
                         <CardActions  >

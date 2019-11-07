@@ -360,6 +360,7 @@ border-radius: 18px;
 .button-close{
   display: flex;
   justify-content:flex-end;
+  float: right;
 }
 /************************************Dialog-Label***********************************************/
 .dialog-label{
@@ -379,5 +380,11 @@ border-radius: 18px;
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
+  
+}
+/******************************************Colaborator*************************************/
+.colab-dialogbox{
+  display:flex;
+  
   
 }

@@ -41,7 +41,9 @@ class MoreTrash extends Component {
                 </Tooltip>
                 <Popper
 
-                    open={this.state.anchorEl} anchorEl={this.state.anchorEl}
+                    open={this.state.anchorEl} anchorEl={this.state.anchorEl} style={{
+                        zIndex: "99999", marginTop: "5px", position: "static"
+                    }} 
                 >
                     <Paper>
                         <MenuItem onClick={this.restoreNote}>Restore</MenuItem>

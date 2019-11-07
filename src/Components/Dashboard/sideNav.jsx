@@ -16,6 +16,8 @@ import { getAllLabels } from '../../Controller/NoteController';
 import { label } from '../../Controller/label';
 import { deleteLabel, updateLabel } from '../../Controller/label';
 import { getTrashedNotes } from '../../Controller/NoteController';
+import EditLabel from '../Dashboard/editlLabel';
+import  DisplayLabelNotes from '../Dashboard/displayLabelNotes'
 
 const themes = createMuiTheme({
     overrides: {
@@ -39,9 +41,10 @@ const themes = createMuiTheme({
             labelName: '',
             trashNotes: [],
             changLabel: false,
-            newLabelName:''
-
-        }
+            newLabelName:'',
+            labelIdforFetchingNote:'',
+            labelForNote:''
+  }
     }
     componentDidMount() {
         this.getLabels();
@@ -63,6 +66,7 @@ const themes = createMuiTheme({
         this.setState({
             labelName: event.target.value,
         })
+        console.log(this.state.labelName)
     }
     createLabel = () => {
         if (this.state.labelName === '') {
@@ -124,20 +128,38 @@ this.setState({
         else{
             var label={
                 'labelName':this.state.labelName
-            
-         }
+            }
         updateLabel(labelId,label).then((res)=> {
          console.log(res.data)
         })
 
         }
     }
-   
+    changeLabelDialog(item){
+        this.setState({
+            labelDialog:item
+        })
+    }
+    getNotes=(data)=>{
+        this.setState({
+            labelIdforFetchingNote:!this.state.labelIdforFetchingNote
+        })
+    }
+    handleLabelChild=(label)=>{
+        console.log(label.id)
+        console.log(label)
+        this.setState({
+            labelForNote : label.value
+        })
+        console.log(this.state.labelForNote)
+        this.props.history.push( '/labelnotes/'+label.labelName )
+    }
+    
     render() {
         let showLabels = this.state.labels.map((data) => {
            
             return (
-                <MenuItem key={data.id}> <LabelOutlinedIcon style={{ paddingRight: "10px" }} />{data.labelName}</MenuItem>
+                <MenuItem key={data.id}  onClick={()=>this.handleLabelChild(data)} > <LabelOutlinedIcon style={{ paddingRight: "10px" }} />{data.labelName}</MenuItem>
             )
         })
         let showLabelsinDialog = this.state.labels.map((data) => {
@@ -146,14 +168,14 @@ this.setState({
 
                 <DialogContent key={data.id} className="dialog-label" style={{ paddingLeft: "2px" }}>
 
-                    <DeleteOutlineOutlinedIcon onClick={()=>this.deleteLabel(data.id)} style={{ paddingRight: "6px", paddingBottom: "4px" }} />
-                    <TextField 
-                    type="text"
-                    multilined
-                    value= {data.labelName}
-                    onChange={this.labelNameChange}
-                     />
-                     < CreateIcon onClick={()=>this.handleUpdateLabel(data.id)} style={{ paddingLeft: "123px" }} />
+                    <DeleteOutlineOutlinedIcon onClick={()=>this.deleteLabel(data.id)} style={{ paddingRight: "6px", paddingBottom: "4px",cursor: "pointer"}} />
+                    
+                    
+                     <EditLabel label={data} data={{
+                     changeLabelDialog:this.changeLabelDialog.bind(this)
+                    }}/>
+                      {/* {data.labelName} */}
+                     
                 </DialogContent>
                     )
         })
@@ -180,7 +202,7 @@ this.setState({
 
                         <div className="label">Labels</div>
 
-                        <div>{showLabels}</div>
+                        <div  > {showLabels}</div>
 
 
 

@@ -1,7 +1,10 @@
 
 import axios from 'axios';
 
-
+const headers={
+    'Content-Type': 'application/json',
+    'token':localStorage.getItem('token')
+}
 export function Usercontroller(userRegister) {
     const baseUrl = process.env.REACT_APP_BASE_URL;
 
@@ -54,3 +57,8 @@ export function userVerify(userToken) {
     return axios.put('http://localhost:8080/user/verify/'+token, null,{ header: header });
     
 }
+
+export function getLoggedUser(){
+    return axios.get('http://localhost:8080/user/loggedinuser',{ headers : headers });
+}
+

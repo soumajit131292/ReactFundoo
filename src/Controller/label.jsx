@@ -15,3 +15,11 @@ export function deleteLabel(labelId) {
 export function updateLabel(labelId,label) {
     return axios.put('http://localhost:8080/label/updatebylabelid/'+labelId,label,{ headers : headers})
 }
+
+export function addLabelonNote(labelId,noteId) {
+    return axios.put('http://localhost:8080/label/update/'+labelId+'/'+noteId,null,{ headers : headers})
+}
+
+export function getNotesByLabelId(labelId){
+    return axios.get('http://localhost:8080/label/notebylabelid/'+labelId,{ headers : headers });
+}

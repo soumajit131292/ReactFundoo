@@ -14,16 +14,22 @@ import archive from './Components/Dashboard/archive';
 import deletNote from './Components/Dashboard/deletNote';
 import deletepage from './Pages/deletepage';
 import UnArchieve from './Pages/unArchivePage';
+import DisplayLabelNotes from './Components/Dashboard/displayLabelNotes';
+import Label from './Pages/label';
 class App extends Component {
   render() {
     return (
 
       <Router>
-        
+        Label
         <Route path="/" exact component={dashboard}></Route>
         <Route path="/home" component={dashboard}></Route>
+        <Route path="/labelnotes/:labelForNote" component={Label} ></Route>
         <Route path="/unarchive" component={UnArchieve}></Route>
         <Route path="/registration" component={Registration}></Route>
+        
+        {/* <Route path="/labelnote" component={Label}></Route> */}
+
         <Route path="/forgotpassword" component={ForgotPassword}></Route>
         <Route path="/resetpassword/:token" component={ResetPassword}></Route>
         <Route path="/delete" component={deletepage}></Route>
