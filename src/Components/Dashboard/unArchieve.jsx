@@ -125,13 +125,13 @@ class UnArchieve extends Component {
                             </CardContent>
                             <CardContent>
                                 {keys.description}<br/>
-                                {keys.colab.map((item)=> {
+                                {/* {keys.colab.map((item)=> {
                                     
                                     return (
                                     <Chip label=  {item.userEmailId} variant="outlined"/>
                                       );
                                     
-                                })}
+                                })} */}
                                 
                             </CardContent>
                         </div>

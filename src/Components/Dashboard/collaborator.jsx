@@ -90,9 +90,9 @@ class Collaborator extends Component {
         }
         let colabBody = {
             "emailId": this.state.emailId,
-            "id": this.state.id,
+           
         }
-        collaboratorAdd(colabBody, this.props.noteId.id).then((res) => {
+        collaboratorAdd(this.state.emailId, this.props.noteId.id).then((res) => {
             console.log(res.data);
             this.setState({
                 chipOpen: !this.state.open
@@ -141,13 +141,13 @@ class Collaborator extends Component {
                         {this.state.firstName} {this.state.lastName} (Owner)<br />
                         {this.state.email}
                         {!this.state.chipOpen ? null : <Chip label={this.state.emailId} />}<br />
-                        {this.props.noteId.colab.map(function (item) {
+                        {/* {this.props.noteId.colab.map(function (item) {
 
                             return (
                                 <Chip label={item.userEmailId} variant="outlined" />
                             );
 
-                        })}<br />
+                        })}<br /> */}
                         <div>
                         {!this.state.view ?
                             <InputBase

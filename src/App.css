@@ -380,6 +380,16 @@ border-radius: 18px;
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
+  padding-top: 75px;
+  
+}
+.deleteNotePage{
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 75px;
   
 }
 /******************************************Colaborator*************************************/
@@ -387,4 +397,29 @@ border-radius: 18px;
   display:flex;
   
   
+}
+/*********************************fullbox-display*********************************************/
+.fullbox-display{
+  display:flex;
+  flex-direction: column;
+  height:auto;
+  width:700px;
+  margin:18px;
+}
+.footer-componnet{
+  display : flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  
+}
+.note-display-footer{
+  display : flex;
+  flex-direction: row;
+  justify-content: space-between
+}
+.fullbox-display-footer{
+  display : flex;
+  flex-direction: row;
+  justify-content:space-between;
+
 }

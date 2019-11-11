@@ -6,24 +6,35 @@ export default class dashboard extends Component {
     constructor(props){
         super(props);
         this.state={
-            update:false
+            update:false,
+            list: false,
+              
         }
-        this.newNote=React.createRef();
+      //  this.newNote=React.createRef();
     }
+    listView = (event) => {
+        this.setState({
+            list: !this.state.list,
+          
+        })
+        console.log(this.state.list)
+    }
+
     noteToDashboard=(note)=>{
         console.log("curretn card",note);
         this.newNote.current.updateCard(note);
     }
     render() {
+        console.log(this.state.list)
         return (
             <div>
-                <Appbar ></Appbar>
+                <Appbar listView={this.listView}></Appbar>
                {/* <Note noteToDashboard={this.noteToDashboard} /> */}
                <Note />
                {/* <AllNotes 
                ref={this.newNote}
                /> */}
-               <AllNotes />
+               <AllNotes view={this.state.list}/>
 
             </div>
         )

@@ -58,3 +58,12 @@ export function getArchivedNotes(){
     return axios.get('http://localhost:8080/notes/getarchivenotes',{ headers : headers });
 }
 
+export function setRemainder(abc,notId)
+{
+    console.log('before',abc)
+   let datetim=new Date(abc).toISOString();
+   console.log('after',datetim)
+   console.log('param',headers)
+    return axios.post('http://localhost:8080/notes/remainder?datetime='+datetim+'&noteId='+notId,{ headers : headers });
+}
+//eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJJZCI6MX0.dL6z9dPcxpXnrQgKN_3b8yRKVuaNGMC2-0o9W3SMY7oPGTizuoKkPp2MHJbCQ3Uv5S4IDfDpmhHbodVRU_mh5g

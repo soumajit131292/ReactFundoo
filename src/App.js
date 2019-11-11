@@ -22,7 +22,7 @@ class App extends Component {
 
       <Router>
         Label
-        <Route path="/" exact component={dashboard}></Route>
+        <Route path="/" exact component={Login}></Route>
         <Route path="/home" component={dashboard}></Route>
         <Route path="/labelnotes/:labelForNote" component={Label} ></Route>
         <Route path="/unarchive" component={UnArchieve}></Route>

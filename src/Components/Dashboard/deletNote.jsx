@@ -76,13 +76,13 @@ class DeletNote extends Component {
                             </CardContent>
                             <CardContent>
                                 {keys.description}<br/>
-                                {keys.colab.map((item)=> {
+                                {/* {keys.colab.map((item)=> {
                                     
                                     return (
                                     <Chip label=  {item.userEmailId} variant="outlined"/>
                                       );
                                     
-                                })}
+                                })} */}
                             </CardContent>
                         </div>
                         <CardActions  >
@@ -114,7 +114,7 @@ class DeletNote extends Component {
             )
         })
         return (
-            <div className="allNotePage" open={this.props.trigger}>
+            <div className="deleteNotePage" open={this.props.trigger}>
                 <MuiThemeProvider theme={themes}>
                     {getAllNote}
                 </MuiThemeProvider>

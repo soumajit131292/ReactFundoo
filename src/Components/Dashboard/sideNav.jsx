@@ -148,10 +148,8 @@ this.setState({
     handleLabelChild=(label)=>{
         console.log(label.id)
         console.log(label)
-        this.setState({
-            labelForNote : label.value
-        })
-        console.log(this.state.labelForNote)
+        
+        console.log("labelforname------->",this.state.labelForNote)
         this.props.history.push( '/labelnotes/'+label.labelName )
     }
     

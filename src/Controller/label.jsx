@@ -20,6 +20,6 @@ export function addLabelonNote(labelId,noteId) {
     return axios.put('http://localhost:8080/label/update/'+labelId+'/'+noteId,null,{ headers : headers})
 }
 
-export function getNotesByLabelId(labelId){
-    return axios.get('http://localhost:8080/label/notebylabelid/'+labelId,{ headers : headers });
+export function getNotesByLabelName(labelName){
+    return axios.get('http://localhost:8080/label/notebylabelid/'+labelName,{ headers : headers });
 }

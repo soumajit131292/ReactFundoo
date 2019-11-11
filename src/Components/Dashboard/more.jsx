@@ -70,7 +70,7 @@ export default class more extends Component {
         })
     }
     handleLabelOpen = (e) => {
-        console.log(this.state.noteiD)
+       
         this.setState({
 
             addLabelDialogBox: this.state.addLabelDialogBox ? !this.state.addLabelDialogBox : e.target
@@ -82,6 +82,8 @@ export default class more extends Component {
         })
     }
     saveLabel = (labelId) => {
+        console.log('noteId',this.props.noteId)
+        console.log('labelId------>',labelId)
         addLabelonNote(labelId, this.props.noteId).then((res) => {
             console.log(res.data)
         })

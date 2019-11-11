@@ -52,11 +52,11 @@ Error:true,
             }
             console.log("login", userLoginDetails)
             userLogin(userLoginDetails).then(res => {
-                console.log(res.data);
+              
                 localStorage.setItem("token", res.data.token);
-                console.log(localStorage.getItem('token'));
-                
-                this.props.history.push('/')
+              localStorage.setItem("userEmail",this.state.email);
+                console.log(localStorage.getItem("userEmail"));
+                this.props.history.push('/home')
             }).catch((err) => {
                 let msg = err.response.data.message;
                 console.log("error", err.response.data.message);

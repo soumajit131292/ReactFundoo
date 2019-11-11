@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import SettingsOutlinedIcon from '@material-ui/icons/SettingsOutlined';
+
 import MenuIcon from '@material-ui/icons/Menu';
 import { AppBar, Toolbar, IconButton, MuiThemeProvider, createMuiTheme, ClickAwayListener } from '@material-ui/core';
 import SideNav from './sideNav';
-
-
+import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
+import  Logout from '../logout';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Close'
 import { InputBase } from '@material-ui/core';
@@ -38,6 +38,12 @@ const themes = createMuiTheme({
             searchState: false,
             drawerClose:false
         }
+    }
+    handleViewOpen=async()=>{
+       await this.setState({
+            view: !this.state.view
+        })
+        this.props.listView(this.state.view)
     }
     handleDrawerOpen = () => {
         if (this.state.drwaerOpen === false) {
@@ -94,17 +100,15 @@ const themes = createMuiTheme({
                                 <RefreshOutlinedIcon />
                             </IconButton>
                             <IconButton >
-                            {this.state.view ? <ViewStreamOutlinedIcon onClick={this.handleViewOpen} className="viewIcon" />
+                            {this.state.view ? <DashboardOutlinedIcon onClick={this.handleViewOpen} className="viewIcon" />
                                 : <AppsOutlinedIcon onClick={this.handleViewOpen} className="viewIcon" />}
                             </IconButton>
                             </div>
-                        <AppsOutlinedIcon onClick={this.handleViewOpen} className="viewIcon" />
+                        
                         <div className="profile" >
                             
                         </div>
-                        <IconButton>
-                                <SettingsOutlinedIcon />
-                            </IconButton>
+                        <Logout />
                     </Toolbar>
 
                 </AppBar>
