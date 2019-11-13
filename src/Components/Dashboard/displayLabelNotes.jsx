@@ -17,6 +17,7 @@ import Chip from '@material-ui/core/Chip';
 import Remainder from '../Dashboard/remainder';
 import Archive from '../Dashboard/archive';
 import { getNotesByLabelName } from '../../Controller/label';
+import Color from '../Dashboard/color';
 const themes = createMuiTheme({
     overrides: {
         MuiPaper: {
@@ -57,11 +58,20 @@ class DisplayLabelNotes extends Component {
         this.getNotes()
     }
     getNotes = () => {
-        getNotesByLabelName(this.props.labelName).then((res) => {
+        // getNotesByLabelName(this.props.labelName).then((res) => {
+        //     this.setState({
+        //         notes: res.data.object
+        //     })
+        // })
+        NoteController().then((res) => {
+            console.log("in getNotes ", res.data);
             this.setState({
-                notes: res.data
+                notes: res.data.object,
             })
-        })
+            console.log('data', this.state.notes)
+            console.log('colab', this.state.colabs)
+        }
+        )
     }
     handleTitleChange = (event) => {
         this.setState({
@@ -86,6 +96,7 @@ class DisplayLabelNotes extends Component {
     deleteLabel = (label) => {
         console.log('in display component', label)
         deleteLabel(label.id).then((res) => {
+            this.getNotes()
             console.log(res.data)
 
         }).catch((err) => {
@@ -113,41 +124,56 @@ class DisplayLabelNotes extends Component {
 
 
     render() {
-
+        console.log(this.state.notes)
+        const viewNote = !this.props.view ? "note-display" : "fullbox-display"
+        const viewFooter = !this.props.view ? "note-display-footer" : "fullbox-display-footer"
+        // console.log(this.props.labelName)
+        // let getAllNotes = this.state.notes.map((keys) => {
+        //     return <div key={keys.id}>
+        //         {keys.note.labels.map((labela) => {
+        //             return (<div key={labela.id}>
+        //                 {labela.labelName === this.props.labelName ? labela.labelName : ''}
+        //             </div>
+        //             );
+        //         })}
+        //     </div>
+        // })
         let getAllNotes = this.state.notes.map((keys) => {
             return <div key={keys.id}>
                 <div>
-                    {keys.labels.map((labela) => {
+                    {keys.note.labels.map((labela) => {
                         return (<div key={labela.id}>{labela.labelName === this.props.labelName ? < div key={keys.id} >
-                            < Card key={keys.id} className="note-display" >
-                                <div onClick={() => { this.handleClickTakeNote(keys) }}>
+                            < Card key={keys.id} className={viewNote} style={{ backgroundColor: keys.note.colorCode }}>
+                                <div onClick={() => { this.handleClickTakeNote(keys.note) }}>
                                     <CardContent>
-                                        {keys.title}
+                                        {keys.note.title}
                                     </CardContent>
                                     <CardContent>
-                                        {keys.description}<br />
-                                        <div>
-                                            {keys.labels.map((labela) => {
-                                                return (<div key={labela.id}>{labela === null ? '' :
-                                                    <Chip label={labela.labelName} onDelete={() => this.deleteLabel(labela)} variant="outlined" />}
-                                                </div>);
+                                        {keys.note.description}
+                                    </CardContent>
+                                    <CardContent>
+                                        {keys.note.labels.map((labela) => {
+                                            return (<div key={labela.id}>{labela === null ? '' :
+                                                <Chip label={labela.labelName} onDelete={() => this.deleteLabel(labela)} variant="outlined" />}
+                                            </div>);
 
-                                            })}
-                                            {/* {keys.colab.map((colab) => {
+                                        })}
+                                        {keys.user.map((colab) => {
 
-                                                return (<div key={colab.colabId}>{colab === null ? '' :
-                                                    <Chip label={colab.userEmailId} variant="outlined" />}
-                                                </div>);
+                                            return (<div key={colab.colabId}>{colab === null ? '' :
+                                                <Chip label={colab.email} variant="outlined" />}
+                                            </div>);
 
-                                            })} */}
-                                        </div>
+                                        })}
+
                                     </CardContent>
                                 </div>
-                                <CardActions  >
+                                <CardActions className={viewFooter}>
                                     <Remainder />
-                                    <Collaborator noteId={keys} />
-                                    <Archive note={keys.id} />
-                                    <More noteId={keys.id} />
+                                    <Collaborator noteId={keys.note} />
+                                    <Color noteId={keys.note.id} />
+                                    <Archive note={keys.note.id} />
+                                    <More noteId={keys.note.id} />
                                 </CardActions>
                             </Card >
                             <Dialog open={this.state.openDialog} >
@@ -168,21 +194,22 @@ class DisplayLabelNotes extends Component {
                                             value={this.state.description}
                                             onChange={this.handleDescription}
                                         /></CardContent>
-                                    <CardActions>
+                                    <CardActions className={viewFooter}>
                                         <Remainder />
-                                        <Collaborator noteId={keys} />
+                                        <Collaborator noteId={keys.note} />
 
 
 
-                                        <Archive note={keys.id} />
-                                        <More noteId={keys.id} />
+                                        <Archive note={keys.note.id} />
+                                        <Color noteId={keys.note.id} />
+                                        <More noteId={keys.note.id} />
                                         <Button className="button-close" style={{ float: "right " }} onClick={this.closeDialog}>Close</Button>
 
                                     </CardActions>
                                 </Card >
                             </Dialog>
                         </div > :
-                            ''}
+                          ''}
                         </div>);
 
                     })}

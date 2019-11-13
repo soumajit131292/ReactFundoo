@@ -54,11 +54,11 @@ export function userVerify(userToken) {
         'Content-Type': 'application/json'
     }
     
-    return axios.put('http://localhost:8080/user/verify/'+token, null,{ header: header });
+    return axios.put('http://localhost:8081/user/verify/'+token, null,{ header: header });
     
 }
 
 export function getLoggedUser(){
-    return axios.get('http://localhost:8080/user/loggedinuser',{ headers : headers });
+    return axios.get('http://localhost:8081/user/loggedinuser',{ headers : headers });
 }
 

@@ -102,6 +102,9 @@ const themes = createMuiTheme({
     archievedPage=()=>{
         this.props.history.push('/unarchive')
     }
+    remainderpage=()=>{
+        this.props.history.push('/remainder')
+    }
     deleteLabel=(labelId)=>{
         deleteLabel(labelId).then((res)=>{
             console.log(res.data)
@@ -189,11 +192,11 @@ this.setState({
 
                         </MenuItem>
 
-                        <MenuItem>
+                        <MenuItem onClick={this.remainderpage}>
                             <AddAlertOutlinedIcon />
-                            <span>
+                           
                                 Reaminders
-                    </span>
+                    
                         </MenuItem>
 
                         <Divider />

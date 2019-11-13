@@ -9,9 +9,11 @@ import { ClickAwayListener } from '@material-ui/core';
 import { getLoggedUser } from '../../Controller/Usercontroller';
 import Button from '@material-ui/core/Button';
 import { InputBase, Card, Tooltip, TextField, Snackbar, IconButton } from '@material-ui/core';
-import { collaboratorAdd } from '../../Controller/colabController';
+import { collaboratorAdd ,collaboratorDelete } from '../../Controller/colabController';
 import DoneOutlinedIcon from '@material-ui/icons/DoneOutlined';
 import Chip from '@material-ui/core/Chip';
+import { getColabUser  } from '../../Controller/NoteController';
+import ClearOutlinedIcon from '@material-ui/icons/ClearOutlined';
 
 class Collaborator extends Component {
     constructor(props) {
@@ -28,15 +30,19 @@ class Collaborator extends Component {
             Error: false,
             message: "",
             chipOpen: false,
+            colbaUserArray: [],
         }
     }
 
     dialogOpenClose = () => {
+        this.getColabUserDetails()
+        console.log(this.colbaUserArray)
         this.setState({
             open: !this.state.open,
 
         })
     }
+    
     closeDialogfromAway = () => {
         this.setState({
             open: !this.state.open
@@ -44,7 +50,8 @@ class Collaborator extends Component {
     }
 
     componentDidMount() {
-        this.getUser()
+        this.getUser();
+        this.getColabUserDetails();
     }
     getUser = () => {
         getLoggedUser().then((res) => {
@@ -55,6 +62,16 @@ class Collaborator extends Component {
                 email: res.data.email,
             })
 
+        })
+
+    }
+    getColabUserDetails=()=>{
+        getColabUser(this.props.noteId.id).then((res)=>{
+            console.log(res.data)
+            this.setState({
+                colbaUserArray: res.data
+            })
+            
         })
 
     }
@@ -81,36 +98,55 @@ class Collaborator extends Component {
         })
     }
     saveColab = () => {
-        if (!/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.state.emailId)) {
+        if(this.state.emailId==='')
+        {
+            this.setState({
+
+                Error: true,
+                message: 'Please add email address',
+                chipOpen: !this.state.open,
+            })
+        }
+       else if (!/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.state.emailId)) {
             this.setState({
 
                 Error: true,
                 message: 'Please provide a valid email address'
             })
-        }
+       }
+       else {
         let colabBody = {
             "emailId": this.state.emailId,
-           
+
         }
         collaboratorAdd(this.state.emailId, this.props.noteId.id).then((res) => {
-            console.log(res.data);
+            console.log(res.data.object);
             this.setState({
-                chipOpen: !this.state.open
+                chipOpen: !this.state.open,
+
             })
 
         }).catch((res) => {
             this.setState({
                 Error: true,
-                message: res.response.data.message,
+                message: 'Please provide a valid email address',
                 open: !this.state.open,
                 view: !this.state.view
             })
         })
 
     }
+}
+dleteColaborator=(colab)=>{
+    console.log(colab.email)
+    collaboratorDelete(colab.email, this.props.noteId.id).then((res)=>{
+        console.log(res.data)
+    })
+}
 
 
     render() {
+       
         return (
             <div >
                 <Snackbar anchorOrigin={{
@@ -140,27 +176,34 @@ class Collaborator extends Component {
                     <DialogContent dividers >
                         {this.state.firstName} {this.state.lastName} (Owner)<br />
                         {this.state.email}
-                        {!this.state.chipOpen ? null : <Chip label={this.state.emailId} />}<br />
-                        {/* {this.props.noteId.colab.map(function (item) {
+                      
+                        {this.state.chipOpen ? null :
+                            this.state.colbaUserArray.map((colab) => {
+                                console.log('second    ',colab)
 
-                            return (
-                                <Chip label={item.userEmailId} variant="outlined" />
-                            );
+                                return (<div key={colab.id}>
+                                    {colab.email}
+                                    <ClearOutlinedIcon onClick={()=>this.dleteColaborator(colab)}/>
+                                    {/* { <Chip label={colab.email} /> */}
+                                    </div>)}
 
-                        })}<br /> */}
+                            )
+                        }<br />
+                       
+
                         <div>
-                        {!this.state.view ?
-                            <InputBase
-                                placeholder="add person"
-                                onClick={this.showIcon}
-                            /> :
-                            <InputBase
-                                type="email"
-                                placeholder="add person"
-                                value={this.state.emailId}
-                                onChange={this.onChangeEmailId}
-                            />}
-                        {!this.state.view ? null : <DoneOutlinedIcon onClick={this.saveColab} />}
+                            {!this.state.view ?
+                                <InputBase
+                                    placeholder="add person"
+                                    onClick={this.showIcon}
+                                /> :
+                                <InputBase
+                                    type="email"
+                                    placeholder="add person"
+                                    value={this.state.emailId}
+                                    onChange={this.onChangeEmailId}
+                                />}
+                            {!this.state.view ? null : <DoneOutlinedIcon onClick={this.saveColab} />}
                         </div>
                     </DialogContent>
                     <DialogActions>

@@ -16,10 +16,11 @@ import deletepage from './Pages/deletepage';
 import UnArchieve from './Pages/unArchivePage';
 import DisplayLabelNotes from './Components/Dashboard/displayLabelNotes';
 import Label from './Pages/label';
+import remainder from './Pages/remainder';
 class App extends Component {
   render() {
     return (
-
+      
       <Router>
         Label
         <Route path="/" exact component={Login}></Route>
@@ -35,6 +36,7 @@ class App extends Component {
         <Route path="/delete" component={deletepage}></Route>
         <Route path="/registersuccess" component={RegistrationSuccess}></Route>
         <Route path="/verify/:token" component={Verify}></Route>
+        <Route path="/remainder" component={remainder}></Route>
         
       </Router>
     );

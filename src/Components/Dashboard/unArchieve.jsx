@@ -18,6 +18,7 @@ import { AppBar, Toolbar, IconButton, ClickAwayListener } from '@material-ui/cor
 import { archiveNote } from '../../Controller/NoteController';
 import CardHeader from '@material-ui/core/CardHeader';
 import Archive from '../Dashboard/archive';
+import Color from '../Dashboard/color';
 const themes = createMuiTheme({
     overrides: {
         MuiPaper: {
@@ -55,7 +56,7 @@ class UnArchieve extends Component {
         getArchivedNotes().then((res) => {
             console.log("in getNotes ", res.data);
             this.setState({
-                notes: res.data,
+                notes: res.data.object,
             })
             console.log('data', this.state.notes)
         }
@@ -98,6 +99,7 @@ class UnArchieve extends Component {
                 openDialog: !this.state.openDialog,
             })
             updateNote(editedNote, this.state.id).then((res) => {
+               this.getArchiveNotes();
                 console.log(res.data);
             })
         }
@@ -119,12 +121,12 @@ class UnArchieve extends Component {
             return (
                 < div key={keys.id} >
                     < Card key={keys.id} className="note-display" >
-                        <div onClick={() => { this.handleClickTakeNote(keys) }}>
+                        <div onClick={() => { this.handleClickTakeNote(keys.note) }}>
                             <CardContent>
-                                {keys.title}
+                                {keys.note.title}
                             </CardContent>
                             <CardContent>
-                                {keys.description}<br/>
+                                {keys.note.description}<br/>
                                 {/* {keys.colab.map((item)=> {
                                     
                                     return (
@@ -137,11 +139,11 @@ class UnArchieve extends Component {
                         </div>
                         <CardActions  >
                             <IconButton style={{ padding: "0px" }} >
-                                <More noteId={keys.id} />
+                                <More noteId={keys.note.id} />
                             </IconButton>
 
                             <Tooltip title="UnArchive">
-                                <UnarchiveOutlinedIcon onClick={() => this.handleUnArchive(keys.id)} />
+                                <UnarchiveOutlinedIcon onClick={() => this.handleUnArchive(keys.note.id)} />
                             </Tooltip>
                         </CardActions>
                     </Card >
@@ -167,9 +169,9 @@ class UnArchieve extends Component {
                                   
                             <CardActions>
                                 <Tooltip title="UnArchive">
-                                    <UnarchiveOutlinedIcon onClick={() => this.handleUnArchive(keys.id)} />
+                                    <UnarchiveOutlinedIcon onClick={() => this.handleUnArchive(keys.note.id)} />
                                 </Tooltip>
-                                <More noteId={keys.id} />
+                                <More noteId={keys.note.id} />
                                 <Button className="button-close" onClick={this.closeDialog}>Close</Button>
                             </CardActions>
                         </Card >

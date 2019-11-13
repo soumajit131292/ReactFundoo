@@ -6,20 +6,20 @@ const headers={
     'token':localStorage.getItem('token')
 }
 export function label(label) {
-    return axios.post('http://localhost:8080/label/createlabel',label,{ headers : headers})
+    return axios.post('http://localhost:8081/label/createlabel',label,{ headers : headers})
 }
 export function deleteLabel(labelId) {
-    return axios.delete('http://localhost:8080/label/delete/'+labelId,{ headers : headers})
+    return axios.delete('http://localhost:8081/label/delete/'+labelId,{ headers : headers})
 }
 
 export function updateLabel(labelId,label) {
-    return axios.put('http://localhost:8080/label/updatebylabelid/'+labelId,label,{ headers : headers})
+    return axios.put('http://localhost:8081/label/updatebylabelid/'+labelId,label,{ headers : headers})
 }
 
 export function addLabelonNote(labelId,noteId) {
-    return axios.put('http://localhost:8080/label/update/'+labelId+'/'+noteId,null,{ headers : headers})
+    return axios.put('http://localhost:8081/label/update/'+labelId+'/'+noteId,null,{ headers : headers})
 }
 
 export function getNotesByLabelName(labelName){
-    return axios.get('http://localhost:8080/label/notebylabelid/'+labelName,{ headers : headers });
+    return axios.get('http://localhost:8081/label/notebylabelid/'+labelName,{ headers : headers });
 }
