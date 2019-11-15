@@ -30,7 +30,11 @@
 
 
 /**************************************** register ***************************************/
-
+.appBar{
+  display : flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
 
 .registerPage{
   display: flex;
@@ -282,7 +286,7 @@ flex-direction: column;
 }
 .search{
   height:40px;
-  width: 50%;
+  width: 760px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -293,8 +297,8 @@ border-radius: 18px;
 }
 .appBar{
   display:flex;
-  justify-content: center;
-  flex-direction: row;
+  justify-content: left;
+  flex-direction: row
 
 }
 /*****************************SideNav**********************************/
@@ -347,6 +351,7 @@ border-radius: 18px;
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
+  padding-top: 50px;
 
 }
 /**********************************************Dialog**********************************************/
@@ -370,7 +375,8 @@ border-radius: 18px;
 /*************************toolbar***********************************************/
 .toolbar{
   display: flex;
-  justify-content: space-evenly;
+
+  justify-content: flex-start;
 }
 
 /*******************************allUnThrashNotePage************************************/
@@ -422,4 +428,12 @@ border-radius: 18px;
   flex-direction: row;
   justify-content:space-between;
 
+}
+.allSearchNote{
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 75px;
 }

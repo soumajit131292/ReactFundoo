@@ -16,6 +16,7 @@ class Remainder extends Component {
         this.state = {
             anchorEl: false,
             selectedDate: new Date(),
+            remainderSet: false
         }
     }
     handleDateTimePick = (e) => {
@@ -30,6 +31,10 @@ class Remainder extends Component {
         console.log('noteId in remainder', this.props.noteId);
         console.log('data', this.state.selectedDate)
         setRemainder(data, this.props.noteId).then((res) => {
+            this.setState({
+                remainderSet: !this.state.remainderSet
+            })
+            this.props.updateNote(this.state.remainderSet)
             console.log(res.data)
         }).catch((err) => {
             console.log(err)

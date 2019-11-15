@@ -4,7 +4,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { AppBar, Toolbar, IconButton, MuiThemeProvider, createMuiTheme, ClickAwayListener } from '@material-ui/core';
 import SideNav from './sideNav';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
-import  Logout from '../logout';
+import Logout from '../logout';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Close'
 import { InputBase } from '@material-ui/core';
@@ -12,38 +12,57 @@ import RefreshOutlinedIcon from '@material-ui/icons/RefreshOutlined';
 import { withRouter } from 'react-router-dom';
 import AppsOutlinedIcon from '@material-ui/icons/AppsOutlined';
 import ViewStreamOutlinedIcon from '@material-ui/icons/ViewStreamOutlined';
+import search from '../../Controller/search';
+import SearchNote from '../Dashboard/searchNote';
 
 const themes = createMuiTheme({
     overrides: {
         MuiIconButton: {
             root: {
-                padding: "2px"
+                padding: "2px",
+               // paddingTop: "10px"
             }
-        }
+        },
+        // MuiAppBar:{
+        //     positionFixed: {
+        //     position:"fixed"
+        // }
+   // },MuiToolbar
+   MuiToolbar:{
+    root:{
+    paddingTop: "70px"
+        
     }
+    }
+    }
+
 })
 
 
- class Appbar extends Component {
+class Appbar extends Component {
     constructor(props) {
         super(props);
         this.state = {
             drwaerOpen: false,
-            
-            
             refresh: false,
             view: false,
-            search: "",
+            searchTitle: "",
             searchNotes: [],
             searchState: false,
-            drawerClose:false
+            drawerClose: false,
+            field: 'title',
+            newComp: false,
+            hello: "man"
         }
     }
-    handleViewOpen=async()=>{
-       await this.setState({
+    handleViewOpen = async () => {
+        await this.setState({
             view: !this.state.view
         })
         this.props.listView(this.state.view)
+        // this.props.menu(this.state.hello)
+        console.log(this.props)
+        console.log(this.props.listView)
     }
     handleDrawerOpen = () => {
         if (this.state.drwaerOpen === false) {
@@ -56,62 +75,93 @@ const themes = createMuiTheme({
                 drwaerOpen: false,
             })
         }
-
-
+    }
+    searchnote = async (event) => {
+     await   this.setState({
+            searchTitle: event.target.value,
+            
+        })
+        console.log('111111',this.state.searchTitle);
+        
+        search(this.state.field,this.state.searchTitle)
+        .then((res)=>{
+            this.setState({
+                searchNotes : res
+            })
+            this.props.searchable(this.state.searchNotes)
+            console.log('22222',res)
+            
+       }).catch((err)=>{
+        console.log('333333',err)
+       })
+       
+       //this.props.history.push('/search')
+       // console.log(search)
+       // this.props.searchnotes(this.state.search)       
+    }
+    openChild =()=>{
+        search(this.state.field,this.state.searchTitle).then((res)=>{
+            this.setState({
+                searchNotes : res.data
+            })
+            console.log(res.data)   
+             this.props.searchable(this.state.searchNotes)        
+        })
+       // this.props.history.push('/search')
+    }
+    openchildpage=()=>{
+        this.props.history.push('/search')
     }
     render() {
         return (
             <div className="appBar">
                 <MuiThemeProvider theme={themes}>
-                <AppBar style={{ background: '#ffffff',height:"70px",display: "flex",justifyContent:"center" }}  >
-                    <Toolbar className="toolbar">
-                        <div className="menu">
-                            <IconButton style={{ padding: "10px" }} onClick={this.handleDrawerOpen}>
-                                <MenuIcon />
-                            </IconButton>
-                            <SideNav menubar={this.state.drwaerOpen} />
-
-                        </div>
-                        <div style={{color:"blue"}}>
-                            {(this.props.location.state !== undefined) ? this.props.location.state : "Fundoo"}
-                        </div>
-                        <div className="image">
-                           
-                            <img src={require('../../asserts/images/gooleKeep.png')}
-                                width="40px" height="40px" />
-                        </div>
-                        
-                        <div className="search">
-                            <IconButton style={{ padding: "10px" }} >
-                            <SearchIcon />
-                            </IconButton>
-                            <InputBase
-                                style={{ width: "100%" }}
-                                placeholder="Search....."
-                                value={this.state.search}
-                                
-                            />
-                            <IconButton style={{ padding: "10px" }} >
-                                <ClearIcon />
-                            </IconButton>
-                        </div>
-                        <div className="right">
-                            <IconButton >
-                                <RefreshOutlinedIcon />
-                            </IconButton>
-                            <IconButton >
-                            {this.state.view ? <DashboardOutlinedIcon onClick={this.handleViewOpen} className="viewIcon" />
-                                : <AppsOutlinedIcon onClick={this.handleViewOpen} className="viewIcon" />}
-                            </IconButton>
+                    <AppBar position="fixed" style={{ background: '#ffffff', height: "70px", display: "flex", justifyContent: "center" }}  >
+                        <Toolbar className="toolbar">
+                            <div style={{paddingRight:"10px"}}>
+                                <IconButton style={{ padding: "10px" }} onClick={this.handleDrawerOpen}>
+                                    <MenuIcon />
+                                </IconButton>
+                                <SideNav menubar={this.state.drwaerOpen} />
                             </div>
-                        
-                        <div className="profile" >
+                            <div className="image">
+                                <img src={require('../../asserts/images/gooleKeep.png')}
+                                    width="40px" height="40px" />
+                            </div>
+                            <div >
+                                {(this.props.location.state !== undefined) ? this.props.location.state : "Fundoo"}
+                            </div>
                             
-                        </div>
-                        <Logout />
-                    </Toolbar>
-
-                </AppBar>
+                            <div className="search">
+                                <IconButton style={{ padding: "10px"}} >
+                                    <SearchIcon onClick={this.openChild}/>
+                                </IconButton>
+                                <InputBase
+                                    style={{ width: "100%" }}
+                                    placeholder="Search....."
+                                    value={this.state.search}
+                                    onChange={this.searchnote} 
+                                    onClick={this.openchildpage}                                 
+                                />
+                                <IconButton style={{ padding: "10px" }} >
+                                    <ClearIcon />
+                                </IconButton>
+                            </div>
+                            <div className="right" >
+                                <IconButton >
+                                    <RefreshOutlinedIcon />
+                                </IconButton>
+                                <IconButton style={{paddingRight:"10px"}}>
+                                    {this.state.view ? <DashboardOutlinedIcon onClick={this.handleViewOpen} className="viewIcon" />
+                                        : <AppsOutlinedIcon onClick={this.handleViewOpen} className="viewIcon" />}
+                                </IconButton>
+                            </div>
+                            <div className="profile" >
+                            </div>
+                            <Logout />
+                        </Toolbar>
+                        <SearchNote open={this.state.newComp}/>
+                    </AppBar>
                 </MuiThemeProvider>
             </div>
         )

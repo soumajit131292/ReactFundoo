@@ -58,8 +58,8 @@ Error:true,
                 console.log(localStorage.getItem("userEmail"));
                 this.props.history.push('/home')
             }).catch((err) => {
-                let msg = err.response.data.message;
-                console.log("error", err.response.data.message);
+                //let msg = err.response.data.message;
+                //console.log("error", err.response.data.message);
                 this.setState({
                     message: 'User does not exist',
                     email: '',

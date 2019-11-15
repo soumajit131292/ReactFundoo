@@ -17,6 +17,7 @@ import UnArchieve from './Pages/unArchivePage';
 import DisplayLabelNotes from './Components/Dashboard/displayLabelNotes';
 import Label from './Pages/label';
 import remainder from './Pages/remainder';
+import  NoteSearchPage  from './Pages/noteSearchPage'
 class App extends Component {
   render() {
     return (
@@ -37,7 +38,8 @@ class App extends Component {
         <Route path="/registersuccess" component={RegistrationSuccess}></Route>
         <Route path="/verify/:token" component={Verify}></Route>
         <Route path="/remainder" component={remainder}></Route>
-        
+        <Route path="/search" component={NoteSearchPage}></Route>
+      
       </Router>
     );
   }

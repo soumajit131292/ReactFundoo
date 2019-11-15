@@ -23,3 +23,8 @@ export function addLabelonNote(labelId,noteId) {
 export function getNotesByLabelName(labelName){
     return axios.get('http://localhost:8081/label/notebylabelid/'+labelName,{ headers : headers });
 }
+export function createLabelOnNote(noteId,label){
+    console.log('label',label)
+    console.log('noteId',noteId)
+    return axios.post('http://localhost:8081/label/create/'+noteId,label,{ headers : headers });
+}

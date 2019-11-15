@@ -57,17 +57,21 @@ class AllNotes extends Component {
             colabs: [],
             anchorEl: null,
             selectedDate: new Date(),
+            newCreatedNote: false
         }
         console.log(this.props.view)
     }
     componentDidMount() {
         this.getNotes();
+        // console.log(this.props.cretaed)
+
     }
     getNotes = () => {
         NoteController().then((res) => {
             console.log("in getNotes ", res.data);
             this.setState({
                 notes: res.data.object,
+
             })
             console.log('data', this.state.notes)
             console.log('colab', this.state.colabs)
@@ -158,26 +162,48 @@ class AllNotes extends Component {
     pinNote = () => {
 
     }
+    change = (value) => {
+        if (value === true)
+            this.getNotes()
+    }
+    reloadNote=(value)=>{
+        if(value === true)
+        this.getNotes()
+    }
+    archieveResponse=(value)=>{
+        if(value === true)
+        this.getNotes()
+    }
+    colabAdd=(value)=>{
+        if(value===true)
+        this.getNotes()
+    }
+    clobaDelete=(value)=>{
+        if(value===true)
+        this.getNotes()
+    }
+    deleteResponse=(value)=>{
+        if(value===true)
+        this.getNotes()
+    }
+    addLabelResponse=(value)=>{
+        if(value===true)
+        this.getNotes()
+    }
     render() {
-        console.log(this.state.notes)
-        const viewNote = !this.props.view ? "note-display" : "fullbox-display"
-        const viewFooter = !this.props.view ? "note-display-footer" : "fullbox-display-footer"
+
+        const viewNote = !this.props.show ? "note-display" : "fullbox-display"
+        const viewFooter = !this.props.show ? "note-display-footer" : "fullbox-display-footer"
         let getAllNotes = this.state.notes.map((keys) => {
-            
             return (
                 keys === null ? '' :
-
                     < div key={keys.id} >
                         < Card key={keys.id} className={viewNote} style={{ backgroundColor: keys.note.colorCode }} >
-
                             <div onClick={() => { this.handleClickTakeNote(keys.note) }}>
                                 <CardContent>
                                     {keys.note.title}
                                     {keys.note.pinned === true ? <UnPin noteId={keys.note.id} /> : <PinUnpin noteId={keys.note.id} />}
                                     {keys.note.isPinned}
-
-
-
                                 </CardContent>
                                 <CardContent>
                                     {keys.note.description}
@@ -191,11 +217,9 @@ class AllNotes extends Component {
                                         </div>);
                                     })}
                                     {keys.user.map((colab) => {
-
-                                        return (<div key={colab.colabId}>{colab === null ? '' :
+                                        return (<div key={colab.colabId}>{colab === null || colab.email=== localStorage.getItem('userEmail')? '' :
                                             <Chip label={colab.email} variant="outlined" />}
                                         </div>);
-
                                     })}
                                 </div>
                                 <Popper open={this.state.anchorEl} anchorEl={this.state.anchorEl}
@@ -213,17 +237,14 @@ class AllNotes extends Component {
                                     </ClickAwayListener>
                                 </Popper>
                             </CardContent>
-
                             <div>
-
                             </div>
                             <CardActions className={viewFooter}>
-
-                                <Remainder noteId={keys.note.id} />
-                                <Collaborator noteId={keys.note} />
-                                <Color noteId={keys.note.id} />
-                                <Archive note={keys.note.id} />
-                                <More noteId={keys.note.id} />
+                                <Remainder noteId={keys.note.id} updateNote={this.reloadNote}/>
+                                <Collaborator noteId={keys.note} collaboratorAdd={this.colabAdd} collaboratorDelete={this.clobaDelete}/>
+                                <Color noteId={keys.note.id} changed={this.change} />
+                                <Archive note={keys.note.id} archievedDoneResposne={this.archieveResponse}/>
+                                <More noteId={keys.note.id} moreToAllNotes={this.deleteResponse} labelAdd={this.addLabelResponse}/>
                             </CardActions>
                         </Card >
                         <Dialog open={this.state.openDialog} >
@@ -253,16 +274,13 @@ class AllNotes extends Component {
                             </Card >
                         </Dialog>
                     </div >
-
             )
         })
-
-
-
         return (
             <div className="allNotePage" >
                 <MuiThemeProvider theme={themes}>
                     {getAllNotes}
+                    {this.props.cretaed ? this.getNotes() : ''}
                 </MuiThemeProvider>
             </div >
         )

@@ -27,6 +27,7 @@ class Color extends Component {
             openPalate: false,
             anchorEl: null,
             addLabelDialogBox : null,
+            colorChange:false
         }
 
     }
@@ -47,6 +48,10 @@ class Color extends Component {
         console.log(color.colorCode)
         console.log(this.props.noteId)
         setColour(color.target.value,this.props.noteId).then((res)=>{
+            this.setState({
+                colorChange:!this.state.colorChange
+            })
+            this.props.changed(this.state.colorChange)
             console.log(res.data)
         }).catch((err)=>{
             console.log(err.data)

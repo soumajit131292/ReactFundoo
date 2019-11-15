@@ -7,13 +7,17 @@ class Archive extends Component {
     constructor(props) {
         super(props)
         this.state = {
-
+archieve : false
         }
     }
     handleArchive = () => {
 
         console.log(this.props.note)
         archiveNote(this.props.note).then((res) => {
+            this.setState({
+                archieve : true
+            })
+            this.props.archievedDoneResposne(this.state.archieve)
             console.log(res.data)
         })
     }

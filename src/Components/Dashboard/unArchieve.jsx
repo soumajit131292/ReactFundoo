@@ -19,12 +19,15 @@ import { archiveNote } from '../../Controller/NoteController';
 import CardHeader from '@material-ui/core/CardHeader';
 import Archive from '../Dashboard/archive';
 import Color from '../Dashboard/color';
+import Collaborator from '../Dashboard/collaborator';
+import Remainder from '../Dashboard/remainder';
 const themes = createMuiTheme({
     overrides: {
         MuiPaper: {
             rounded: {
                 borderRadius: "8px",
-                margin: "10px"
+                margin: "10px",
+                
             },
             elevation24: {
                 boxShadow: "none"
@@ -108,6 +111,7 @@ class UnArchieve extends Component {
 
         console.log(noteId)
         archiveNote(noteId).then((res) => {
+            this.getArchiveNotes();
             console.log(res.data)
         })
     }
@@ -117,35 +121,48 @@ class UnArchieve extends Component {
         })
     }
     render() {
+        const viewNote = !this.props.view ? "note-display" : "fullbox-display"
+        const viewFooter = !this.props.view ? "note-display-footer" : "fullbox-display-footer"
         let getAllNotes = this.state.notes.map((keys) => {
             return (
                 < div key={keys.id} >
-                    < Card key={keys.id} className="note-display" >
+                    < Card key={keys.id} className={viewNote} style={{ backgroundColor: keys.note.colorCode }}>
                         <div onClick={() => { this.handleClickTakeNote(keys.note) }}>
                             <CardContent>
                                 {keys.note.title}
                             </CardContent>
                             <CardContent>
                                 {keys.note.description}<br/>
-                                {/* {keys.colab.map((item)=> {
-                                    
-                                    return (
-                                    <Chip label=  {item.userEmailId} variant="outlined"/>
-                                      );
-                                    
-                                })} */}
+                                </CardContent>
+                                <CardContent>
+                                <div>{keys.note.remainder === null ? '' : <Chip label={keys.note.remainder} onDelete={() => this.deleteRemainder(keys.note)} onClick={(e) => { this.pickerOpen(e) }} variant="outlined" />}
+                                    {keys.note.labels.map((labela) => {
+                                        return (<div key={labela.id}>{labela === null ? '' :
+                                            <Chip label={labela.labelName} onDelete={() => this.deleteLabel(labela)} variant="outlined" />}
+                                        </div>);
+                                    })}
+                                    {keys.user.map((colab) => {
+
+                                        return (<div key={colab.colabId}>{colab === null ? '' :
+                                            <Chip label={colab.email} variant="outlined" />}
+                                        </div>);
+
+                                    })}
+                                </div>
                                 
                             </CardContent>
-                        </div>
-                        <CardActions  >
-                            <IconButton style={{ padding: "0px" }} >
-                                <More noteId={keys.note.id} />
-                            </IconButton>
+                            <CardActions className={viewFooter}>
 
-                            <Tooltip title="UnArchive">
+                                <Remainder noteId={keys.note.id} />
+                                <Collaborator noteId={keys.note} />
+                                <Color noteId={keys.note.id} />
+                                <Tooltip title="UnArchive">
                                 <UnarchiveOutlinedIcon onClick={() => this.handleUnArchive(keys.note.id)} />
                             </Tooltip>
-                        </CardActions>
+                                <More noteId={keys.note.id} />
+                            </CardActions>
+                        </div>
+                       
                     </Card >
                     
                     <Dialog open={this.state.openDialog} >

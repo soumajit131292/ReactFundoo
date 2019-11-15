@@ -14,6 +14,7 @@ class Note extends Component {
             title: '',
             description: '',
             windowOpen: false,
+            noteCreated: false,
         }
     }
     handleTitleChange = (event) => {
@@ -55,7 +56,11 @@ class Note extends Component {
             console.log("yes");
             // this.props.noteToDashboard(note);
             createNote(note).then((response) => {
-                
+                console.log(response.data)
+                this.setState({
+                    noteCreated : !this.state.noteCreated
+                })
+                this.props.createnote(this.state.noteCreated)
             }).catch((err)=>{
                 console.log('err',err.response.data.message)
             });

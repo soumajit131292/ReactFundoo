@@ -43,7 +43,8 @@ const themes = createMuiTheme({
             changLabel: false,
             newLabelName:'',
             labelIdforFetchingNote:'',
-            labelForNote:''
+            labelForNote:'',
+          
   }
     }
     componentDidMount() {
@@ -79,7 +80,9 @@ const themes = createMuiTheme({
                 "labelName": this.state.labelName,
             }
             label(labelData).then((res) => {
+                this.getLabels();
                 this.setState({
+                    
                     labelDialog: !this.state.labelDialog
                 })
                  console.log(res.data)
@@ -107,6 +110,7 @@ const themes = createMuiTheme({
     }
     deleteLabel=(labelId)=>{
         deleteLabel(labelId).then((res)=>{
+            this.getLabels();
             console.log(res.data)
             this.setState({
                 labelDialog: !this.state.labelDialog
@@ -155,6 +159,10 @@ this.setState({
         console.log("labelforname------->",this.state.labelForNote)
         this.props.history.push( '/labelnotes/'+label.labelName )
     }
+    labelEdit=(value)=>{
+if(value===true)
+this.getLabels();
+    }
     
     render() {
         let showLabels = this.state.labels.map((data) => {
@@ -172,8 +180,8 @@ this.setState({
                     <DeleteOutlineOutlinedIcon onClick={()=>this.deleteLabel(data.id)} style={{ paddingRight: "6px", paddingBottom: "4px",cursor: "pointer"}} />
                     
                     
-                     <EditLabel label={data} data={{
-                     changeLabelDialog:this.changeLabelDialog.bind(this)
+                     <EditLabel label={data}  editedLabel={this.labelEdit} data={{
+                     changeLabelDialog:this.changeLabelDialog.bind(this) 
                     }}/>
                       {/* {data.labelName} */}
                      

@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
-import { Paper, Tooltip } from '@material-ui/core';
+import { Paper, Tooltip, TextField } from '@material-ui/core';
 import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
 import { trashNote } from '../../Controller/NoteController';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-
+import AddCircleOutlinedIcon from '@material-ui/icons/AddCircleOutlined';
 import { getAllLabels } from '../../Controller/NoteController';
 import Checkbox from '@material-ui/core/Checkbox';
 import Menu from '@material-ui/core/Menu';
 import { addLabelonNote } from '../../Controller/label';
+import { createLabelOnNote } from '../../Controller/label';
 export default class more extends Component {
     constructor(props) {
         super(props);
@@ -27,6 +28,10 @@ export default class more extends Component {
             labelCompOpen: false,
             labels: [],
             noteiD: '',
+            opacity: 1,
+            title: '',
+            deleteNOte: false,
+            addLabel : false
         }
     }
     componentDidMount() {
@@ -61,6 +66,14 @@ export default class more extends Component {
     }
     handleDelet = () => {
         trashNote(this.props.noteId).then((res) => {
+
+            this.setState({
+                anchorEl: !this.state.anchorEl ,
+                deleteNOte: !this.state.deleteNOte
+            })
+            this.props.moreToAllNotes(this.state.deleteNOte)
+
+
             console.log(res)
         })
     }
@@ -70,11 +83,9 @@ export default class more extends Component {
         })
     }
     handleLabelOpen = (e) => {
-       
-        this.setState({
-
+        this.setState({           
             addLabelDialogBox: this.state.addLabelDialogBox ? !this.state.addLabelDialogBox : e.target
-        })
+        })     
     }
     handleClickCloseAwayLabel = () => {
         this.setState({
@@ -82,11 +93,52 @@ export default class more extends Component {
         })
     }
     saveLabel = (labelId) => {
-        console.log('noteId',this.props.noteId)
-        console.log('labelId------>',labelId)
+        console.log('noteId', this.props.noteId)
+        console.log('labelId------>', labelId)
         addLabelonNote(labelId, this.props.noteId).then((res) => {
+            this.setState({
+                addLabel : !this.state.addLabel,
+            })
+           
+            this.props.labelAdd(this.state.addLabel)
             console.log(res.data)
         })
+    }
+    mouseEnter = () => {
+        this.setState({
+            opacity: 0
+        })
+    }
+    handleTitleChange = (event) => {
+        this.setState({
+            labelName: event.target.value
+        })
+    }
+    handleUpdateLabel = () => {
+        // console.log('hello', this.props.label.id)
+        if (this.state.labelName === '' || this.state.detectChange === false) {
+            this.props.data.changeLabelDialog(false)
+        }
+
+        else {
+            this.setState({
+                labelName: this.state.labelName
+            })
+            var label = {
+                'labelName': this.state.labelName
+            }
+            console.log(this.state.labelName)
+            console.log(this.props.noteId)
+            createLabelOnNote(this.props.noteId, label).then((res) => {
+                this.setState({
+                    addLabel : !this.state.addLabel,
+                })
+               
+                this.props.labelAdd(this.state.addLabel)
+                console.log(res.data)
+            })
+
+        }
     }
     render() {
         let allLabel = this.state.labels.map((label) => {
@@ -110,8 +162,16 @@ export default class more extends Component {
 
                     <ClickAwayListener onClickAway={this.handleClickCloseAwayLabel}>
                         <Paper>
+                            <TextField
+                                type="text"
+                                multiline
+                                value={this.state.labelName}
+                                onChange={this.handleTitleChange}
 
+                            />
+                            <AddCircleOutlinedIcon onClick={this.handleUpdateLabel} />
                             {allLabel}
+
                         </Paper>
 
 
@@ -120,7 +180,7 @@ export default class more extends Component {
 
                 </Menu>
                 <Tooltip title="More" >
-                    <MoreVertOutlinedIcon onClick={(e) => this.handleMoreOpen(e)} onClickAway={this.closePaper}
+                    <MoreVertOutlinedIcon onMouseEnter={this.mouseEnter} onClick={(e) => this.handleMoreOpen(e)} onClickAway={this.closePaper}
                         style={{
                             zIndex: "9999", marginTop: "5px", position: "static"
                         }}

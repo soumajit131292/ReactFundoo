@@ -10,7 +10,8 @@ class EditLabel extends Component {
             labelName: '',
             click: false,
             labelDialog: true,
-            detectChange: false
+            detectChange: false,
+            labelCreate:'',
         }
     }
     labelNameChange = (event) => {
@@ -42,6 +43,10 @@ class EditLabel extends Component {
                 'labelName': this.state.labelName
             }
             updateLabel(this.props.label.id, label).then((res) => {
+                this.setState({
+                    labelCreate : !this.state.labelCreate
+                })
+                this.props.editedLabel(this.state.labelCreate)
                 this.props.data.changeLabelDialog(false)
                 console.log(res.data)
             })

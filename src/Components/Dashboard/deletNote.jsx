@@ -59,7 +59,7 @@ class DeletNote extends Component {
             this.setState({
                 notes: res.data
             })
-
+            this.getDeletedNote()
         }).catch((err) => {
             console.log('delete notes err', err);
 

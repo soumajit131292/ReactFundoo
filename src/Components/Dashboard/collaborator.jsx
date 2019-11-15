@@ -31,6 +31,8 @@ class Collaborator extends Component {
             message: "",
             chipOpen: false,
             colbaUserArray: [],
+            colabAdded: false,
+            colabDelete: false,
         }
     }
 
@@ -123,9 +125,9 @@ class Collaborator extends Component {
             console.log(res.data.object);
             this.setState({
                 chipOpen: !this.state.open,
-
+                colabAdded : !this.state.colabAdded
             })
-
+           this.props.collaboratorAdd(this.state.colabAdded)
         }).catch((res) => {
             this.setState({
                 Error: true,
@@ -140,6 +142,10 @@ class Collaborator extends Component {
 dleteColaborator=(colab)=>{
     console.log(colab.email)
     collaboratorDelete(colab.email, this.props.noteId.id).then((res)=>{
+        this.setState({
+            colabDelete : !this.state.colabDelete
+        })
+        this.props.collaboratorDelete(this.state.colabDelete)
         console.log(res.data)
     })
 }
@@ -172,11 +178,9 @@ dleteColaborator=(colab)=>{
                     <DialogTitle >
                         Collaborators
                     </DialogTitle>
-
                     <DialogContent dividers >
                         {this.state.firstName} {this.state.lastName} (Owner)<br />
-                        {this.state.email}
-                      
+                        {this.state.email}                    
                         {this.state.chipOpen ? null :
                             this.state.colbaUserArray.map((colab) => {
                                 console.log('second    ',colab)
@@ -186,11 +190,8 @@ dleteColaborator=(colab)=>{
                                     <ClearOutlinedIcon onClick={()=>this.dleteColaborator(colab)}/>
                                     {/* { <Chip label={colab.email} /> */}
                                     </div>)}
-
                             )
                         }<br />
-                       
-
                         <div>
                             {!this.state.view ?
                                 <InputBase
@@ -214,9 +215,7 @@ dleteColaborator=(colab)=>{
                             Save
                         </Button>
                     </DialogActions>
-
                 </Dialog>
-
             </div>
         )
     }
