@@ -3,7 +3,7 @@ import { NoteController } from '../../Controller/NoteController';
 import { InputBase, Card, Tooltip, TextField } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-
+import { MuiPickersUtilsProvider } from 'material-ui-pickers';
 import Dialog from '@material-ui/core/Dialog';
 import { addLabelonNote } from '../../Controller/label';
 import CardContent from '@material-ui/core/CardContent';
@@ -17,6 +17,11 @@ import Chip from '@material-ui/core/Chip';
 import Remainder from '../Dashboard/remainder';
 import Archive from '../Dashboard/archive';
 import { getNotesByLabelName } from '../../Controller/label';
+import Popper from '@material-ui/core/Popper';
+import Paper from '@material-ui/core/Paper';
+import DateTimePicker from 'react-datetime-picker';
+import 'date-fns';
+import DateFnsUtils from "@date-io/date-fns";
 import Color from '../Dashboard/color';
 const themes = createMuiTheme({
     overrides: {
@@ -49,8 +54,6 @@ class DisplayLabelNotes extends Component {
             openDialog: false,
             colabs: [],
         }
-
-
     }
 
     componentDidMount() {
@@ -120,24 +123,40 @@ class DisplayLabelNotes extends Component {
             })
         }
     }
-
+    change = (value) => {
+        if (value === true)
+            this.getNotes()
+    }
+    reloadNote = (value) => {
+        if (value === true)
+            this.getNotes()
+    }
+    archieveResponse = (value) => {
+        if (value === true)
+            this.getNotes()
+    }
+    colabAdd = (value) => {
+        if (value === true)
+            this.getNotes()
+    }
+    clobaDelete = (value) => {
+        if (value === true)
+            this.getNotes()
+    }
+    deleteResponse = (value) => {
+        if (value === true)
+            this.getNotes()
+    }
+    addLabelResponse = (value) => {
+        if (value === true)
+            this.getNotes()
+    }
 
 
     render() {
         console.log(this.state.notes)
         const viewNote = !this.props.view ? "note-display" : "fullbox-display"
         const viewFooter = !this.props.view ? "note-display-footer" : "fullbox-display-footer"
-        // console.log(this.props.labelName)
-        // let getAllNotes = this.state.notes.map((keys) => {
-        //     return <div key={keys.id}>
-        //         {keys.note.labels.map((labela) => {
-        //             return (<div key={labela.id}>
-        //                 {labela.labelName === this.props.labelName ? labela.labelName : ''}
-        //             </div>
-        //             );
-        //         })}
-        //     </div>
-        // })
         let getAllNotes = this.state.notes.map((keys) => {
             return <div key={keys.id}>
                 <div>
@@ -152,28 +171,40 @@ class DisplayLabelNotes extends Component {
                                         {keys.note.description}
                                     </CardContent>
                                     <CardContent>
-                                        {keys.note.labels.map((labela) => {
-                                            return (<div key={labela.id}>{labela === null ? '' :
-                                                <Chip label={labela.labelName} onDelete={() => this.deleteLabel(labela)} variant="outlined" />}
-                                            </div>);
-
-                                        })}
-                                        {keys.user.map((colab) => {
-
-                                            return (<div key={colab.colabId}>{colab === null ? '' :
-                                                <Chip label={colab.email} variant="outlined" />}
-                                            </div>);
-
-                                        })}
-
+                                    <div>{keys.note.remainder === null ? '' : <Chip label={keys.note.remainder} onDelete={() => this.deleteRemainder(keys.note)} onClick={(e) => { this.pickerOpen(e) }} variant="outlined" />}
+                                    {keys.note.labels.map((labela) => {
+                                        return (<div key={labela.id}>{labela === null ? '' :
+                                            <Chip label={labela.labelName} onDelete={() => this.deleteLabel(labela)} variant="outlined" />}
+                                        </div>);
+                                    })}
+                                    {keys.user.map((colab) => {
+                                        return (<div key={colab.colabId}>{colab === null || colab.email=== localStorage.getItem('userEmail')? '' :
+                                            <Chip label={colab.email} variant="outlined" />}
+                                        </div>);
+                                    })}
+                                </div>
+                                        <Popper open={this.state.anchorEl} anchorEl={this.state.anchorEl}
+                                    style={{ marginTop: "5px", zIndex: "9999" }}>
+                                    <ClickAwayListener onClickAway={this.handleClickAway}>
+                                        <Paper className="reminder-paper">
+                                            <MuiPickersUtilsProvider utils={DateFnsUtils} >
+                                                <DateTimePicker style={{ padding: "5px", width: "175px" }}
+                                                    value={this.state.selectedDate}
+                                                    onChange={this.handleChangeDate}
+                                                >
+                                                </DateTimePicker>
+                                            </MuiPickersUtilsProvider>
+                                        </Paper>
+                                    </ClickAwayListener>
+                                </Popper>
                                     </CardContent>
                                 </div>
                                 <CardActions className={viewFooter}>
-                                    <Remainder />
-                                    <Collaborator noteId={keys.note} />
-                                    <Color noteId={keys.note.id} />
-                                    <Archive note={keys.note.id} />
-                                    <More noteId={keys.note.id} />
+                                <Remainder noteId={keys.note.id} updateNote={this.reloadNote} />
+                                        <Collaborator noteId={keys.note} collaboratorAdd={this.colabAdd} collaboratorDelete={this.clobaDelete} />
+                                        <Color noteId={keys.note.id} changed={this.change} />
+                                        <Archive note={keys.note.id} archievedDoneResposne={this.archieveResponse} />
+                                        <More noteId={keys.note.id} moreToAllNotes={this.deleteResponse} labelAdd={this.addLabelResponse} />
                                 </CardActions>
                             </Card >
                             <Dialog open={this.state.openDialog} >
@@ -182,8 +213,6 @@ class DisplayLabelNotes extends Component {
                                         <TextField
                                             type="text"
                                             multiline
-
-
                                             value={this.state.title}
                                             onChange={this.handleTitleChange}
                                         /></CardContent>
@@ -195,29 +224,23 @@ class DisplayLabelNotes extends Component {
                                             onChange={this.handleDescription}
                                         /></CardContent>
                                     <CardActions className={viewFooter}>
-                                        <Remainder />
-                                        <Collaborator noteId={keys.note} />
-
-
-
-                                        <Archive note={keys.note.id} />
-                                        <Color noteId={keys.note.id} />
-                                        <More noteId={keys.note.id} />
+                                        <Remainder noteId={keys.note.id} updateNote={this.reloadNote} />
+                                        <Collaborator noteId={keys.note} collaboratorAdd={this.colabAdd} collaboratorDelete={this.clobaDelete} />
+                                        <Color noteId={keys.note.id} changed={this.change} />
+                                        <Archive note={keys.note.id} archievedDoneResposne={this.archieveResponse} />
+                                        <More noteId={keys.note.id} moreToAllNotes={this.deleteResponse} labelAdd={this.addLabelResponse} />
                                         <Button className="button-close" style={{ float: "right " }} onClick={this.closeDialog}>Close</Button>
 
                                     </CardActions>
                                 </Card >
                             </Dialog>
                         </div > :
-                          ''}
+                            ''}
                         </div>);
-
                     })}
                 </div>
-
             </div>
         });
-
         return (
             <div className="allNotePage">
                 <MuiThemeProvider theme={themes}>

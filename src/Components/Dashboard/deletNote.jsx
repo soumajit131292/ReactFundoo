@@ -51,7 +51,6 @@ class DeletNote extends Component {
     }
     componentDidMount() {
         this.getDeletedNote()
-
     }
     getDeletedNote = () => {
         getTrashedNotes().then((res) => {
@@ -59,12 +58,17 @@ class DeletNote extends Component {
             this.setState({
                 notes: res.data
             })
-            this.getDeletedNote()
+           
         }).catch((err) => {
             console.log('delete notes err', err);
-
         })
     }
+    deleteNote=(value)=>{
+        console.log(this.props.moreTrashToDeleteNote)
+        if(value===true)
+        this.getDeletedNote()
+    }
+    
     render() {
         let getAllNote = this.state.notes.map((keys) => {
             return (
@@ -80,16 +84,13 @@ class DeletNote extends Component {
                                     
                                     return (
                                     <Chip label=  {item.userEmailId} variant="outlined"/>
-                                      );
-                                    
+                                      );                                   
                                 })} */}
                             </CardContent>
                         </div>
-                        <CardActions  >
-                            <IconButton style={{ padding: "30px" }} >
-
-                                <MoreTrash noteId={keys.id} />
-                            </IconButton>
+                        <CardActions  >                            
+                                <MoreTrash noteId={keys.id} moreTrashToDeleteNote={this.deleteNote}/>
+                       
                         </CardActions>
                     </Card >
                     <Dialog open={this.state.openDialog} >
@@ -102,10 +103,9 @@ class DeletNote extends Component {
                                 {keys.description}
                             </CardContent>
                             <CardActions>
-                                <IconButton style={{ padding: "30px" }} >
-
-                                    <MoreTrash noteId={keys.id} />
-                                </IconButton>
+                              
+                                    <MoreTrash noteId={keys.id} moreTrashToDeleteNote={this.deleteNote} />
+                                
                                 <Button className="button-close" onClick={this.closeDialog}>Close</Button>
                             </CardActions>
                         </Card >
@@ -114,7 +114,7 @@ class DeletNote extends Component {
             )
         })
         return (
-            <div className="deleteNotePage" open={this.props.trigger}>
+            <div className="deleteNotePage" >
                 <MuiThemeProvider theme={themes}>
                     {getAllNote}
                 </MuiThemeProvider>

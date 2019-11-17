@@ -33,7 +33,6 @@ class SearchNote extends Component {
             notes: this.props.updatedSearchResult
         })
     }
-
     render() {
         console.log("updated search result", this.state.notes)
         console.log('size------', this.props.updatedSearchResult)
@@ -41,7 +40,7 @@ class SearchNote extends Component {
             var commentNodes = this.props.updatedSearchResult.map((note) => {
                 return (
                     <div>
-                        <Card>
+                        <Card className="note-display">
                             <CardContent>
                                 {note.title}
                                 {note.pinned === true ? <UnPin noteId={note.id} /> : <PinUnpin noteId={note.id} />}
@@ -51,7 +50,6 @@ class SearchNote extends Component {
                                 {note.description}
                             </CardContent>
                             <CardContent>
-
                                 <div>{note.remainder === null ? '' : <Chip label={note.remainder} onDelete={() => this.deleteRemainder(note)} onClick={(e) => { this.pickerOpen(e) }} variant="outlined" />}
                                     {note.labels.map((labela) => {
                                         return (<div key={labela.id}>{labela === null ? '' :
@@ -60,21 +58,17 @@ class SearchNote extends Component {
                                     })}
                                 </div>
                             </CardContent>
-
                         </Card>
                     </div>
                 );
             });
         }
-
-
         return (
             <div className="allUnThrashNotePage" >
                 <MuiThemeProvider theme={themes}>
                     {commentNodes}
                 </MuiThemeProvider>
             </div>
-
         )
     }
 }

@@ -41,7 +41,7 @@ class Color extends Component {
 
     handleClickCloseAwayLabel = () => {
         this.setState({
-            addLabelDialogBox: !this.state.addLabelDialogBox
+            anchorEl : !this.state.anchorEl
         })
     }
     handleChangeColor=(color)=>{
@@ -49,7 +49,9 @@ class Color extends Component {
         console.log(this.props.noteId)
         setColour(color.target.value,this.props.noteId).then((res)=>{
             this.setState({
-                colorChange:!this.state.colorChange
+                colorChange:!this.state.colorChange,
+                anchorEl : !this.state.anchorEl
+
             })
             this.props.changed(this.state.colorChange)
             console.log(res.data)

@@ -4,8 +4,6 @@ import sideNav from '../Components/Dashboard/sideNav';
 import Note from '../Components/Dashboard/Note';
 import Appbar from '../Components/Dashboard/Appbar';
 import DeletNote from '../Components/Dashboard/deletNote';
-
-
 export default class deletepage extends Component {
     constructor(props) {
         super(props)
@@ -17,7 +15,7 @@ export default class deletepage extends Component {
         return (
             <div>
                 <Appbar />
-                <DeletNote trigger={this.state.deletPage} />
+                <DeletNote  />
             </div>
         )
     }

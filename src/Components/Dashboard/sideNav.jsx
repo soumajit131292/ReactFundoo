@@ -17,7 +17,9 @@ import { label } from '../../Controller/label';
 import { deleteLabel, updateLabel } from '../../Controller/label';
 import { getTrashedNotes } from '../../Controller/NoteController';
 import EditLabel from '../Dashboard/editlLabel';
-import  DisplayLabelNotes from '../Dashboard/displayLabelNotes'
+import  DisplayLabelNotes from '../Dashboard/displayLabelNotes';
+
+
 
 const themes = createMuiTheme({
     overrides: {
@@ -220,8 +222,8 @@ this.getLabels();
                      
                         <Divider />
                         <Dialog open={this.state.labelDialog}>
-                            <Card>
-                                <CardContent>
+                           
+                                <DialogContent>
 
                                     <ClearOutlinedIcon />
                                     <TextField
@@ -236,9 +238,9 @@ this.getLabels();
                                     {showLabelsinDialog}
 
 
-                                </CardContent>
+                                </DialogContent>
 
-                            </Card>
+                          
                         </Dialog>
 
                        

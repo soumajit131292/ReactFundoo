@@ -115,7 +115,7 @@ export default class more extends Component {
         })
     }
     handleUpdateLabel = () => {
-        // console.log('hello', this.props.label.id)
+     
         if (this.state.labelName === '' || this.state.detectChange === false) {
             this.props.data.changeLabelDialog(false)
         }
@@ -155,9 +155,9 @@ export default class more extends Component {
         })
         return (
             <div>
-                <Menu
+                <Popper
                     open={this.state.addLabelDialogBox} anchorEl={this.state.addLabelDialogBox} style={{
-                        zIndex: "999999", marginTop: "0px", position: "static"
+                        zIndex: "99999999", marginTop: "0px", position: "static"
                     }} >
 
                     <ClickAwayListener onClickAway={this.handleClickCloseAwayLabel}>
@@ -167,28 +167,28 @@ export default class more extends Component {
                                 multiline
                                 value={this.state.labelName}
                                 onChange={this.handleTitleChange}
+                                className="text-field"
 
                             />
                             <AddCircleOutlinedIcon onClick={this.handleUpdateLabel} />
                             {allLabel}
+                            </Paper>
+                            </ClickAwayListener>
+                        </Popper>
 
-                        </Paper>
+                   
 
-
-
-                    </ClickAwayListener>
-
-                </Menu>
+               
                 <Tooltip title="More" >
-                    <MoreVertOutlinedIcon onMouseEnter={this.mouseEnter} onClick={(e) => this.handleMoreOpen(e)} onClickAway={this.closePaper}
+                    <MoreVertOutlinedIcon  onClick={(e) => this.handleMoreOpen(e)} 
                         style={{
-                            zIndex: "9999", marginTop: "5px", position: "static"
+                            zIndex: "999999", marginTop: "5px", position: "static"
                         }}
                     />
                 </Tooltip>
-                <Menu
+                <Popper
                     open={this.state.anchorEl} anchorEl={this.state.anchorEl} style={{
-                        zIndex: "99999", marginTop: "5px", position: "static"
+                        zIndex: "99999999", marginTop: "5px", position: "static"
                     }} >
                     <ClickAwayListener onClickAway={this.handleClickCloseAway}>
                         <Paper>
@@ -197,7 +197,7 @@ export default class more extends Component {
 
                         </Paper>
                     </ClickAwayListener>
-                </Menu>
+                </Popper>
             </div>
         )
     }

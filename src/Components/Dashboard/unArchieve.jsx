@@ -21,13 +21,16 @@ import Archive from '../Dashboard/archive';
 import Color from '../Dashboard/color';
 import Collaborator from '../Dashboard/collaborator';
 import Remainder from '../Dashboard/remainder';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+
 const themes = createMuiTheme({
     overrides: {
         MuiPaper: {
             rounded: {
                 borderRadius: "8px",
                 margin: "10px",
-                
+
             },
             elevation24: {
                 boxShadow: "none"
@@ -50,6 +53,7 @@ class UnArchieve extends Component {
             description: '',
             notes: [],
             openDialog: false,
+            anchorEl: null,
         }
     }
     componentDidMount() {
@@ -76,13 +80,14 @@ class UnArchieve extends Component {
         })
     }
 
-    handleClickTakeNote = (note) => {
+    handleClickTakeNote = (note, e) => {
         console.log(note)
         this.setState({
             id: note.id,
             title: note.title,
             description: note.description,
             openDialog: !this.state.openDialog,
+            anchorEl: this.state.anchorEl ? !this.state.anchorEl : e.target
         })
     }
 
@@ -102,7 +107,7 @@ class UnArchieve extends Component {
                 openDialog: !this.state.openDialog,
             })
             updateNote(editedNote, this.state.id).then((res) => {
-               this.getArchiveNotes();
+                this.getArchiveNotes();
                 console.log(res.data);
             })
         }
@@ -115,10 +120,38 @@ class UnArchieve extends Component {
             console.log(res.data)
         })
     }
-    handleCloseDialog=()=>{
+    handleCloseDialog = () => {
         this.setState({
-            openDialog : !this.state.openDialog,
+            openDialog: !this.state.openDialog,
         })
+    }
+    change = (value) => {
+        if (value === true)
+        this.getArchiveNotes();
+    }
+    reloadNote=(value)=>{
+        if(value === true)
+        this.getArchiveNotes();
+    }
+    archieveResponse=(value)=>{
+        if(value === true)
+        this.getArchiveNotes();
+    }
+    colabAdd=(value)=>{
+        if(value===true)
+        this.getArchiveNotes();
+    }
+    clobaDelete=(value)=>{
+        if(value===true)
+        this.getArchiveNotes();
+    }
+    deleteResponse=(value)=>{
+        if(value===true)
+        this.getArchiveNotes();
+    }
+    addLabelResponse=(value)=>{
+        if(value===true)
+        this.getArchiveNotes();
     }
     render() {
         const viewNote = !this.props.view ? "note-display" : "fullbox-display"
@@ -127,14 +160,14 @@ class UnArchieve extends Component {
             return (
                 < div key={keys.id} >
                     < Card key={keys.id} className={viewNote} style={{ backgroundColor: keys.note.colorCode }}>
-                        <div onClick={() => { this.handleClickTakeNote(keys.note) }}>
+                        <div onClick={(e) => { this.handleClickTakeNote(keys.note, e) }}>
                             <CardContent>
                                 {keys.note.title}
                             </CardContent>
                             <CardContent>
-                                {keys.note.description}<br/>
-                                </CardContent>
-                                <CardContent>
+                                {keys.note.description}<br />
+                            </CardContent>
+                            <CardContent>
                                 <div>{keys.note.remainder === null ? '' : <Chip label={keys.note.remainder} onDelete={() => this.deleteRemainder(keys.note)} onClick={(e) => { this.pickerOpen(e) }} variant="outlined" />}
                                     {keys.note.labels.map((labela) => {
                                         return (<div key={labela.id}>{labela === null ? '' :
@@ -149,52 +182,65 @@ class UnArchieve extends Component {
 
                                     })}
                                 </div>
-                                
-                            </CardContent>
-                            <CardActions className={viewFooter}>
 
-                                <Remainder noteId={keys.note.id} />
-                                <Collaborator noteId={keys.note} />
-                                <Color noteId={keys.note.id} />
-                                <Tooltip title="UnArchive">
+                            </CardContent>
+                        </div>
+                        <CardActions className={viewFooter}>
+                            <Remainder noteId={keys.note.id} updateNote={this.reloadNote} />
+                            <Collaborator noteId={keys.note} collaboratorAdd={this.colabAdd} collaboratorDelete={this.clobaDelete} />
+                            <Color noteId={keys.note.id} changed={this.change} />
+                            <Tooltip title="UnArchive">
                                 <UnarchiveOutlinedIcon onClick={() => this.handleUnArchive(keys.note.id)} />
                             </Tooltip>
-                                <More noteId={keys.note.id} />
-                            </CardActions>
-                        </div>
-                       
+                            {/* <Archive note={keys.note.id} archievedDoneResposne={this.archieveResponse} /> */}
+                            <More noteId={keys.note.id} moreToAllNotes={this.deleteResponse} labelAdd={this.addLabelResponse} />
+                            {/* <Remainder noteId={keys.note.id} />
+                            <Collaborator noteId={keys.note} />
+                            <Color noteId={keys.note.id} />
+                            <Tooltip title="UnArchive">
+                                <UnarchiveOutlinedIcon onClick={() => this.handleUnArchive(keys.note.id)} />
+                            </Tooltip>
+                            <More noteId={keys.note.id} /> */}
+                        </CardActions>
+
+
                     </Card >
-                    
+
                     <Dialog open={this.state.openDialog} >
-                    
-                        < Card className="note-dialog" style={{ boxShadow: "1px 1px 1px 1px" }} >
-                       
-                            <CardContent>
-                                <TextField
-                                    type="text"
-                                    multiline
-                                    value={this.state.title}
-                                    onChange={this.handleTitleChange}
-                                /></CardContent>
-                            <CardContent>
-                                <TextField
-                                    type="text"
-                                    multiline
-                                    value={this.state.description}
-                                    onChange={this.handleDescription}
-                                /></CardContent>
-                                  
-                            <CardActions>
-                                <Tooltip title="UnArchive">
-                                    <UnarchiveOutlinedIcon onClick={() => this.handleUnArchive(keys.note.id)} />
-                                </Tooltip>
-                                <More noteId={keys.note.id} />
-                                <Button className="button-close" onClick={this.closeDialog}>Close</Button>
-                            </CardActions>
-                        </Card >
-                       
+
+                        {/* < Card className="note-dialog" style={{ boxShadow: "1px 1px 1px 1px" }} > */}
+
+                        <DialogContent>
+                            <TextField
+                                type="text"
+                                multiline
+                                value={this.state.title}
+                                onChange={this.handleTitleChange}
+                            /></DialogContent>
+                        <DialogContent>
+                            <TextField
+                                type="text"
+                                multiline
+                                value={this.state.description}
+                                onChange={this.handleDescription}
+                            /></DialogContent>
+
+                        <DialogActions>
+                        <Remainder noteId={keys.note.id} updateNote={this.reloadNote} />
+                            <Collaborator noteId={keys.note} collaboratorAdd={this.colabAdd} collaboratorDelete={this.clobaDelete} />
+                            <Color noteId={keys.note.id} changed={this.change} />
+                            {/* <Archive note={keys.note.id} archievedDoneResposne={this.archieveResponse} /> */}
+                           
+                            <Tooltip title="UnArchive">
+                                <UnarchiveOutlinedIcon onClick={() => this.handleUnArchive(keys.note.id)} />
+                            </Tooltip>
+                            <More noteId={keys.note.id} moreToAllNotes={this.deleteResponse} labelAdd={this.addLabelResponse}/>
+                            <Button className="button-close" onClick={this.closeDialog}>Close</Button>
+                        </DialogActions>
+                        {/* </Card > */}
+
                     </Dialog>
-                  
+
                 </div >
             )
         })

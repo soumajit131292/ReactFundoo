@@ -14,7 +14,7 @@ import AppsOutlinedIcon from '@material-ui/icons/AppsOutlined';
 import ViewStreamOutlinedIcon from '@material-ui/icons/ViewStreamOutlined';
 import search from '../../Controller/search';
 import SearchNote from '../Dashboard/searchNote';
-
+import Profile from '../Dashboard/profile';
 const themes = createMuiTheme({
     overrides: {
         MuiIconButton: {
@@ -129,9 +129,9 @@ class Appbar extends Component {
                                     width="40px" height="40px" />
                             </div>
                             <div >
+                               
                                 {(this.props.location.state !== undefined) ? this.props.location.state : "Fundoo"}
-                            </div>
-                            
+                            </div>                           
                             <div className="search">
                                 <IconButton style={{ padding: "10px"}} >
                                     <SearchIcon onClick={this.openChild}/>
@@ -148,7 +148,7 @@ class Appbar extends Component {
                                 </IconButton>
                             </div>
                             <div className="right" >
-                                <IconButton >
+                                <IconButton style={{ padding: "10px" }}>
                                     <RefreshOutlinedIcon />
                                 </IconButton>
                                 <IconButton style={{paddingRight:"10px"}}>
@@ -157,6 +157,7 @@ class Appbar extends Component {
                                 </IconButton>
                             </div>
                             <div className="profile" >
+                                <Profile />
                             </div>
                             <Logout />
                         </Toolbar>

@@ -32,7 +32,8 @@ class Remainder extends Component {
         console.log('data', this.state.selectedDate)
         setRemainder(data, this.props.noteId).then((res) => {
             this.setState({
-                remainderSet: !this.state.remainderSet
+                remainderSet: !this.state.remainderSet,
+                anchorEl: !this.state.anchorEl
             })
             this.props.updateNote(this.state.remainderSet)
             console.log(res.data)
@@ -42,7 +43,7 @@ class Remainder extends Component {
     }
     handleClickAway = () => {
         this.setState({
-            anchorEl: null
+            anchorEl: !this.state.anchorEl
         })
     }
     render() {

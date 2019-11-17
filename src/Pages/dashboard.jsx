@@ -8,7 +8,7 @@ export default class dashboard extends Component {
         this.state = {
             update: false,
             list: false,
-            noteCreated : false
+            noteCreation : false
         }
     }
     listView = (event) => {
@@ -22,16 +22,20 @@ export default class dashboard extends Component {
     }
     sendResponse=(value)=>{
         this.setState({
-            noteCreated : value
+            noteCreation : value
         })
+        console.log("note creation--->",this.state.noteCreation);
+        
     }
     render() {
-        console.log(this.state.noteCreated)
+        console.log(this.state.noteCreation)
         return (
             <div>
                 <Appbar listView={this.listView} ></Appbar>              
-                <Note createnote={this.sendResponse}/>              
-                <AllNotes show={this.state.list} cretaed={this.state.noteCreated}/>
+                <Note createnote={this.sendResponse}/>   
+                {this.state.noteCreation}           
+                <AllNotes show={this.state.list} 
+                newNote={this.state.noteCreation}/>
             </div>
         )
     }

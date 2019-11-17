@@ -408,9 +408,18 @@ border-radius: 18px;
 .fullbox-display{
   display:flex;
   flex-direction: column;
-  height:auto;
+  justify-content: center;
+  height: fit-content;
   width:700px;
   margin:18px;
+
+  /* width: 300px;
+  height: fit-content;
+  display:flex;
+ 
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 10px; */
 }
 .footer-componnet{
   display : flex;
@@ -436,4 +445,8 @@ border-radius: 18px;
   flex-wrap: wrap;
   align-items: center;
   padding-top: 75px;
+}
+.text-field{
+  border: none,
+  
 }

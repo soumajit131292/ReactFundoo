@@ -26,6 +26,8 @@ import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
 import PinUnpin from '../../Components/Dashboard/pinUnpin';
 import UnPin from '../Dashboard/unPin';
 import Color from '../Dashboard/color';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
 const themes = createMuiTheme({
     overrides: {
         MuiPaper: {
@@ -67,25 +69,26 @@ class AllNotes extends Component {
 
     }
     getNotes = () => {
+        console.log("called in get notes");
+        
         NoteController().then((res) => {
             console.log("in getNotes ", res.data);
             this.setState({
                 notes: res.data.object,
-
             })
             console.log('data', this.state.notes)
             console.log('colab', this.state.colabs)
         }
         )
     }
-    updateCard = (note) => {
-        console.log("new note", note);
+    // updateCard = (note) => {
+    //     console.log("new note", note);
 
-        var updatedNotes = [...this.state.notes, note];
-        this.setState({
-            notes: updatedNotes
-        })
-    }
+    //     var updatedNotes = [...this.state.notes, note];
+    //     this.setState({
+    //         notes: updatedNotes
+    //     })
+    // }
     handleTitleChange = (event) => {
         this.setState({
             title: event.target.value
@@ -108,6 +111,7 @@ class AllNotes extends Component {
     deleteLabel = (label) => {
         console.log(label)
         deleteLabel(label.id).then((res) => {
+            this.getNotes()
             console.log(res.data)
         }).catch((err) => {
             console.log(err.data)
@@ -190,8 +194,12 @@ class AllNotes extends Component {
         if(value===true)
         this.getNotes()
     }
+    componentWillReceiveProps(){
+        console.log("props createed",this.props.newNote);
+        this.getNotes()      
+    }
     render() {
-
+        console.log("npoerlasdf",this.props.newNote);
         const viewNote = !this.props.show ? "note-display" : "fullbox-display"
         const viewFooter = !this.props.show ? "note-display-footer" : "fullbox-display-footer"
         let getAllNotes = this.state.notes.map((keys) => {
@@ -207,8 +215,8 @@ class AllNotes extends Component {
                                 </CardContent>
                                 <CardContent>
                                     {keys.note.description}
-                                </CardContent>
-                            </div>
+                                </CardContent>    
+                                </div>                        
                             <CardContent>
                                 <div>{keys.note.remainder === null ? '' : <Chip label={keys.note.remainder} onDelete={() => this.deleteRemainder(keys.note)} onClick={(e) => { this.pickerOpen(e) }} variant="outlined" />}
                                     {keys.note.labels.map((labela) => {
@@ -237,6 +245,7 @@ class AllNotes extends Component {
                                     </ClickAwayListener>
                                 </Popper>
                             </CardContent>
+                          
                             <div>
                             </div>
                             <CardActions className={viewFooter}>
@@ -247,40 +256,41 @@ class AllNotes extends Component {
                                 <More noteId={keys.note.id} moreToAllNotes={this.deleteResponse} labelAdd={this.addLabelResponse}/>
                             </CardActions>
                         </Card >
-                        <Dialog open={this.state.openDialog} >
-                            < Card className="note-dialog" style={{ boxShadow: "1px 1px 1px 1px" }} >
-                                <CardContent>
+                        <Dialog open={this.state.openDialog}  >
+                           {/* < Card className="note-dialog" style={{ boxShadow: "1px 1px 1px 1px",backgroundColor: "keys.note.colorCode" }} > */}
+                                <DialogContent >
                                     <TextField
                                         type="text"
                                         multiline
                                         value={this.state.title}
                                         onChange={this.handleTitleChange}
-                                    /></CardContent>
-                                <CardContent>
+                                    /></DialogContent>
+                                <DialogContent>
                                     <TextField
                                         type="text"
                                         multiline
                                         value={this.state.description}
                                         onChange={this.handleDescription}
-                                    /></CardContent>
-                                <CardActions>
-                                    <Remainder />
-                                    <Collaborator noteId={keys.note} />
-                                    <Color noteId={keys.note.id} />
-                                    <Archive note={keys.note.id} />
-                                    <More noteId={keys.note.id} />
+                                    /></DialogContent>
+                                <DialogActions>
+                                <Remainder noteId={keys.note.id} updateNote={this.reloadNote}/>
+                                <Collaborator noteId={keys.note} collaboratorAdd={this.colabAdd} collaboratorDelete={this.clobaDelete}/>
+                                <Color noteId={keys.note.id} changed={this.change} />
+                                <Archive note={keys.note.id} archievedDoneResposne={this.archieveResponse}/>
+                                <More noteId={keys.note.id} moreToAllNotes={this.deleteResponse} labelAdd={this.addLabelResponse}/>
                                     <Button className="button-close" style={{ float: "right " }} onClick={this.closeDialog}>Close</Button>
-                                </CardActions>
-                            </Card >
+                                </DialogActions>
+                            {/* </Card > */}
                         </Dialog>
                     </div >
             )
         })
+        console.log("props",this.props.newNote);
+        
         return (
             <div className="allNotePage" >
-                <MuiThemeProvider theme={themes}>
+                <MuiThemeProvider theme={themes}>              
                     {getAllNotes}
-                    {this.props.cretaed ? this.getNotes() : ''}
                 </MuiThemeProvider>
             </div >
         )

@@ -10,7 +10,7 @@ export function Usercontroller(userRegister) {
     let header = {
         'Content-Type': 'application/json'
     }
-    return axios.post("http://localhost:8081/" + 'user/register', userRegister, { header: header });
+    return axios.post("http://localhost:8080/" + 'user/register', userRegister, { header: header });
 }
 
 
@@ -22,7 +22,7 @@ export function userLogin(userLogin) {
     let header = {
         'Content-Type': 'application/json'
     }
-    return axios.post("http://localhost:8081/" + 'user/login', userLogin, { header: header });
+    return axios.post("http://localhost:8080/" + 'user/login', userLogin, { header: header });
 }
 export function emailVerify(userEmailVerify) {
     const baseUrl = process.env.BASE_URL;
@@ -30,7 +30,7 @@ export function emailVerify(userEmailVerify) {
     let header = {
         'Content-Type': 'application/json'
     }
-    return axios.post("http://localhost:8081/" + 'user/forgotpassword', userEmailVerify, { header: header });
+    return axios.post("http://localhost:8080/" + 'user/forgotpassword', userEmailVerify, { header: header });
 }
 
 export function userPasswordReset(userPassword,userToken) {
@@ -41,7 +41,7 @@ export function userPasswordReset(userPassword,userToken) {
     let header = {
         'Content-Type': 'application/json'
     }
-    return axios.put('http://localhost:8081/user/resetpassword/'+token, userPassword, { header: header });
+    return axios.put('http://localhost:8080/user/resetpassword/'+token, userPassword, { header: header });
 }
 
 export function userVerify(userToken) {
@@ -53,10 +53,10 @@ export function userVerify(userToken) {
         'Content-Type': 'application/json'
     }
     
-    return axios.put('http://localhost:8081/user/verify/'+token, null,{ header: header });  
+    return axios.put('http://localhost:8080/user/verify/'+token, null,{ header: header });  
 }
 
 export function getLoggedUser(){
-    return axios.get('http://localhost:8081/user/loggedinuser',{ headers : headers });
+    return axios.get('http://localhost:8080/user/loggedinuser',{ headers : headers });
 }
 
