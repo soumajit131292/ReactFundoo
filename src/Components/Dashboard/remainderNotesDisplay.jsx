@@ -27,6 +27,7 @@ import PinUnpin from '../../Components/Dashboard/pinUnpin';
 import UnPin from '../Dashboard/unPin';
 import Color from '../Dashboard/color';
 
+
 const themes = createMuiTheme({
     overrides: {
         MuiPaper: {
@@ -156,6 +157,15 @@ class RemainderNotesDisplay extends Component {
             console.log(err)
         })
     }
+    pin=(value)=>{
+        if(value === true)
+        this.getNotes()
+    }
+    unpin=(value)=>{
+        if(value === true)
+        this.getNotes()
+
+    }
     render() {
         const viewNote = !this.props.view ? "note-display" : "fullbox-display"
         const viewFooter = !this.props.view ? "note-display-footer" : "fullbox-display-footer"
@@ -163,11 +173,12 @@ class RemainderNotesDisplay extends Component {
             return (
                ( keys === null ||  keys.note.remainder === null)? '' :
                     < div key={keys.id} >
-                        < Card key={keys.id} className={viewNote} style={{ backgroundColor: keys.note.colorCode }} >                     
+                        < Card key={keys.id} className={viewNote} style={{ backgroundColor: keys.note.colorCode }} >  
+                        { keys.note.pinned === true? <UnPin noteId={keys.note.id} Unpin={this.pin}/> : <PinUnpin noteId={keys.note.id} pinUnpin={this.unpin}/>}                   
                             <div onClick={() => { this.handleClickTakeNote(keys.note) }}>
                                 <CardContent>
                                     {keys.note.title}
-                                    { keys.note.pinned === true? <UnPin noteId={keys.note.id}/> : <PinUnpin noteId={keys.note.id}/>}
+                                    
                                      { keys.note.isPinned }                                        
                                           {keys.user.map((colab) => {
                                                 return (<div key={colab.colabId}>{colab === null ? '' :

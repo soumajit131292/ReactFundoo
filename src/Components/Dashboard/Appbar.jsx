@@ -128,7 +128,7 @@ class Appbar extends Component {
                                 <img src={require('../../asserts/images/gooleKeep.png')}
                                     width="40px" height="40px" />
                             </div>
-                            <div >
+                            <div style={{color: "#b71c1c" }}>
                                
                                 {(this.props.location.state !== undefined) ? this.props.location.state : "Fundoo"}
                             </div>                           

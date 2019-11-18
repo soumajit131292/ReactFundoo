@@ -12,6 +12,11 @@ import Remainder from '../Dashboard/remainder';
 import Collaborator from '../Dashboard/collaborator';
 import Color from '../Dashboard/color';
 import More from './more';
+import ArchiveOutlinedIcon from '@material-ui/icons/ArchiveOutlined';
+import MoreVertOutlinedIcon from '@material-ui/icons/MoreVertOutlined';
+import ColorLensOutlinedIcon from '@material-ui/icons/ColorLensOutlined';
+import PersonAddOutlinedIcon from '@material-ui/icons/PersonAddOutlined';
+import AddAlertOutlinedIcon from '@material-ui/icons/AddAlertOutlined';
 class Note extends Component {
     constructor(props) {
         super(props);
@@ -117,14 +122,15 @@ class Note extends Component {
                     />
                     <InputBase style={{ width: "100%", padding: "10px" }} type="text" placeholder="Description" value={this.state.description} onChange={this.handleDescriptionChange}
                     />
-                    <CardActions>
-                        {/* <Remainder noteId={keys.note.id} updateNote={this.reloadNote} />
-                        <Collaborator noteId={keys.note} collaboratorAdd={this.colabAdd} collaboratorDelete={this.clobaDelete} />
-                        <Color noteId={keys.note.id} changed={this.change} />
-                        <Archive note={keys.note.id} archievedDoneResposne={this.archieveResponse} />
-                        <More noteId={keys.note.id} moreToAllNotes={this.deleteResponse} labelAdd={this.addLabelResponse} /> */}
-                    </CardActions>
+                    <CardActions className="note-display-footer">
+                    <AddAlertOutlinedIcon />
+                    <PersonAddOutlinedIcon />
+                    <ColorLensOutlinedIcon  />
+                    <ArchiveOutlinedIcon />
+                    <MoreVertOutlinedIcon />
                     <Button style={{ paddingTop: "0%", float: "right" }} onClick={this.handleClickClose}>Close</Button>
+                    </CardActions>
+                    {/* <Button style={{ paddingTop: "0%", float: "right" }} onClick={this.handleClickClose}>Close</Button> */}
 
                 </Card>)}
 

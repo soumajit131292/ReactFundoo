@@ -132,6 +132,7 @@ export default class more extends Component {
             createLabelOnNote(this.props.noteId, label).then((res) => {
                 this.setState({
                     addLabel : !this.state.addLabel,
+                    addLabelDialogBox : !this.state.addLabelDialogBox
                 })
                
                 this.props.labelAdd(this.state.addLabel)
@@ -161,7 +162,7 @@ export default class more extends Component {
                     }} >
 
                     <ClickAwayListener onClickAway={this.handleClickCloseAwayLabel}>
-                        <Paper>
+                        <Paper>create label
                             <TextField
                                 type="text"
                                 multiline

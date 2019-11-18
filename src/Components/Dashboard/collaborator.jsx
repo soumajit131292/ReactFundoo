@@ -35,22 +35,18 @@ class Collaborator extends Component {
             colabDelete: false,
         }
     }
-
     dialogOpenClose = () => {
         this.getColabUserDetails()
         console.log(this.colbaUserArray)
         this.setState({
             open: !this.state.open,
-
         })
     }
-    
     closeDialogfromAway = () => {
         this.setState({
             open: !this.state.open
         })
     }
-
     componentDidMount() {
         this.getUser();
         this.getColabUserDetails();
@@ -63,19 +59,15 @@ class Collaborator extends Component {
                 lastName: res.data.lastName,
                 email: res.data.email,
             })
-
         })
-
     }
     getColabUserDetails=()=>{
         getColabUser(this.props.noteId.id).then((res)=>{
             console.log(res.data)
             this.setState({
                 colbaUserArray: res.data
-            })
-            
+            })          
         })
-
     }
     dialogReset = () => {
         this.setState({
@@ -90,7 +82,6 @@ class Collaborator extends Component {
     }
     onChangeEmailId = (event) => {
         this.setState({
-
             emailId: event.target.value
         })
     }
@@ -119,7 +110,6 @@ class Collaborator extends Component {
        else {
         let colabBody = {
             "emailId": this.state.emailId,
-
         }
         collaboratorAdd(this.state.emailId, this.props.noteId.id).then((res) => {
             console.log(res.data.object);
@@ -136,7 +126,6 @@ class Collaborator extends Component {
                 view: !this.state.view
             })
         })
-
     }
 }
 dleteColaborator=(colab)=>{
@@ -147,6 +136,12 @@ dleteColaborator=(colab)=>{
         })
         this.props.collaboratorDelete(this.state.colabDelete)
         console.log(res.data)
+    }).catch((err)=>{
+        this.setState({
+            Error: true,
+            message: 'User Already Exist' 
+        })
+
     })
 }
 

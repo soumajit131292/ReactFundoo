@@ -15,6 +15,8 @@ import More from './more';
 import { AppBar, Toolbar, IconButton, ClickAwayListener } from '@material-ui/core';
 import MoreTrash from '../Dashboard/moreTrash';
 import Chip from '@material-ui/core/Chip';
+import PinUnpin from '../../Components/Dashboard/pinUnpin';
+import UnPin from '../Dashboard/unPin';
 const themes = createMuiTheme({
     overrides: {
         MuiPaper: {
@@ -73,7 +75,8 @@ class DeletNote extends Component {
         let getAllNote = this.state.notes.map((keys) => {
             return (
                 < div key={keys.id} >
-                    < Card key={keys.id} className="note-display" >
+                    < Card key={keys.id} className="note-display" style={{ backgroundColor: keys.colorCode }}>
+                    {/* {keys.note.pinned === true ? <UnPin noteId={keys.note.id} /> : <PinUnpin noteId={keys.note.id} />} */}
                         <div onClick={() => { this.handleClickTakeNote(keys) }}>
                             <CardContent>
                                 {keys.title}

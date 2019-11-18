@@ -23,6 +23,8 @@ import DateTimePicker from 'react-datetime-picker';
 import 'date-fns';
 import DateFnsUtils from "@date-io/date-fns";
 import Color from '../Dashboard/color';
+import PinUnpin from '../../Components/Dashboard/pinUnpin';
+import UnPin from '../Dashboard/unPin';
 const themes = createMuiTheme({
     overrides: {
         MuiPaper: {
@@ -151,7 +153,15 @@ class DisplayLabelNotes extends Component {
         if (value === true)
             this.getNotes()
     }
+    pin=(value)=>{
+        if(value === true)
+        this.getNotes()
+    }
+    unpin=(value)=>{
+        if(value === true)
+        this.getNotes()
 
+    }
 
     render() {
         console.log(this.state.notes)
@@ -162,7 +172,9 @@ class DisplayLabelNotes extends Component {
                 <div>
                     {keys.note.labels.map((labela) => {
                         return (<div key={labela.id}>{labela.labelName === this.props.labelName ? < div key={keys.id} >
+                             {keys.note.pinned === true ? <UnPin noteId={keys.note.id} Unpin={this.pin}/> : <PinUnpin noteId={keys.note.id} pinUnpin={this.unpin}/>}
                             < Card key={keys.id} className={viewNote} style={{ backgroundColor: keys.note.colorCode }}>
+                           
                                 <div onClick={() => { this.handleClickTakeNote(keys.note) }}>
                                     <CardContent>
                                         {keys.note.title}

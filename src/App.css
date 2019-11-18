@@ -35,7 +35,9 @@
   flex-direction: row;
   justify-content: space-evenly;
 }
-
+.right{
+  display: flex;
+}
 .registerPage{
   display: flex;
   justify-content: center;
@@ -375,8 +377,7 @@ border-radius: 18px;
 /*************************toolbar***********************************************/
 .toolbar{
   display: flex;
-
-  justify-content: flex-start;
+  justify-content: space-between
 }
 
 /*******************************allUnThrashNotePage************************************/
@@ -449,4 +450,10 @@ border-radius: 18px;
 .text-field{
   border: none,
   
+}
+.avatar-colab{
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  max-width:250px;
 }

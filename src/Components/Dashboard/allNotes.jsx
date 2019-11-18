@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { NoteController } from '../../Controller/NoteController';
-import { InputBase, Card, Tooltip, TextField } from '@material-ui/core';
+import { InputBase, Card, Tooltip, TextField, Avatar } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Popper from '@material-ui/core/Popper';
@@ -70,7 +70,7 @@ class AllNotes extends Component {
     }
     getNotes = () => {
         console.log("called in get notes");
-        
+
         NoteController().then((res) => {
             console.log("in getNotes ", res.data);
             this.setState({
@@ -170,36 +170,46 @@ class AllNotes extends Component {
         if (value === true)
             this.getNotes()
     }
-    reloadNote=(value)=>{
+    reloadNote = (value) => {
+        if (value === true)
+            this.getNotes()
+    }
+    archieveResponse = (value) => {
+        if (value === true)
+            this.getNotes()
+    }
+    colabAdd = (value) => {
+        if (value === true)
+            this.getNotes()
+    }
+    clobaDelete = (value) => {
+        if (value === true)
+            this.getNotes()
+    }
+    deleteResponse = (value) => {
+        if (value === true)
+            this.getNotes()
+    }
+    addLabelResponse = (value) => {
+        if (value === true)
+            this.getNotes()
+    }
+    pin=(value)=>{
         if(value === true)
         this.getNotes()
     }
-    archieveResponse=(value)=>{
+    unpin=(value)=>{
         if(value === true)
         this.getNotes()
+
     }
-    colabAdd=(value)=>{
-        if(value===true)
-        this.getNotes()
-    }
-    clobaDelete=(value)=>{
-        if(value===true)
-        this.getNotes()
-    }
-    deleteResponse=(value)=>{
-        if(value===true)
-        this.getNotes()
-    }
-    addLabelResponse=(value)=>{
-        if(value===true)
-        this.getNotes()
-    }
-    componentWillReceiveProps(){
-        console.log("props createed",this.props.newNote);
-        this.getNotes()      
+    componentWillReceiveProps() {
+        console.log("props createed", this.props.newNote);
+        if (this.props.newNote)
+            this.getNotes()
     }
     render() {
-        console.log("npoerlasdf",this.props.newNote);
+        console.log("npoerlasdf", this.props.newNote);
         const viewNote = !this.props.show ? "note-display" : "fullbox-display"
         const viewFooter = !this.props.show ? "note-display-footer" : "fullbox-display-footer"
         let getAllNotes = this.state.notes.map((keys) => {
@@ -207,91 +217,98 @@ class AllNotes extends Component {
                 keys === null ? '' :
                     < div key={keys.id} >
                         < Card key={keys.id} className={viewNote} style={{ backgroundColor: keys.note.colorCode }} >
+                            {keys.note.pinned === true ? <UnPin noteId={keys.note.id} Unpin={this.pin}/> : <PinUnpin noteId={keys.note.id} pinUnpin={this.unpin}/>}
                             <div onClick={() => { this.handleClickTakeNote(keys.note) }}>
                                 <CardContent>
                                     {keys.note.title}
-                                    {keys.note.pinned === true ? <UnPin noteId={keys.note.id} /> : <PinUnpin noteId={keys.note.id} />}
-                                    {keys.note.isPinned}
+
+                                    {/* {keys.note.isPinned} */}
                                 </CardContent>
                                 <CardContent>
                                     {keys.note.description}
-                                </CardContent>    
-                                </div>                        
+                                </CardContent>
+                            </div>
                             <CardContent>
-                                <div>{keys.note.remainder === null ? '' : <Chip label={keys.note.remainder} onDelete={() => this.deleteRemainder(keys.note)} onClick={(e) => { this.pickerOpen(e) }} variant="outlined" />}
+                                <div className="avatar-colab">{keys.note.remainder === null ? '' : <Chip label={keys.note.remainder} onDelete={() => this.deleteRemainder(keys.note)} onClick={(e) => { this.pickerOpen(e) }} variant="outlined" />}
                                     {keys.note.labels.map((labela) => {
                                         return (<div key={labela.id}>{labela === null ? '' :
                                             <Chip label={labela.labelName} onDelete={() => this.deleteLabel(labela)} variant="outlined" />}
                                         </div>);
                                     })}
+                                </div><br/>
+                                <div className="avatar-colab" >
                                     {keys.user.map((colab) => {
-                                        return (<div key={colab.colabId}>{colab === null || colab.email=== localStorage.getItem('userEmail')? '' :
-                                            <Chip label={colab.email} variant="outlined" />}
+                                        return (<div key={colab.colabId}>{colab === null || colab.email === localStorage.getItem('userEmail') ? '' : <Tooltip title={colab.email} >
+                                            <Avatar alt="Remy Sharp" >C
+                                        </Avatar>
+                                        </Tooltip>}
                                         </div>);
                                     })}
                                 </div>
-                                <Popper open={this.state.anchorEl} anchorEl={this.state.anchorEl}
-                                    style={{ marginTop: "5px", zIndex: "9999" }}>
-                                    <ClickAwayListener onClickAway={this.handleClickAway}>
-                                        <Paper className="reminder-paper">
-                                            <MuiPickersUtilsProvider utils={DateFnsUtils} >
-                                                <DateTimePicker style={{ padding: "5px", width: "175px" }}
-                                                    value={this.state.selectedDate}
-                                                    onChange={this.handleChangeDate}
-                                                >
-                                                </DateTimePicker>
-                                            </MuiPickersUtilsProvider>
-                                        </Paper>
-                                    </ClickAwayListener>
-                                </Popper>
+                                
+                                
+                            <Popper open={this.state.anchorEl} anchorEl={this.state.anchorEl}
+                                style={{ marginTop: "5px", zIndex: "9999" }}>
+                                <ClickAwayListener onClickAway={this.handleClickAway}>
+                                    <Paper className="reminder-paper">
+                                        <MuiPickersUtilsProvider utils={DateFnsUtils} >
+                                            <DateTimePicker style={{ padding: "5px", width: "175px" }}
+                                                value={this.state.selectedDate}
+                                                onChange={this.handleChangeDate}
+                                            >
+                                            </DateTimePicker>
+                                        </MuiPickersUtilsProvider>
+                                    </Paper>
+                                </ClickAwayListener>
+                            </Popper>
                             </CardContent>
-                          
-                            <div>
-                            </div>
-                            <CardActions className={viewFooter}>
-                                <Remainder noteId={keys.note.id} updateNote={this.reloadNote}/>
-                                <Collaborator noteId={keys.note} collaboratorAdd={this.colabAdd} collaboratorDelete={this.clobaDelete}/>
-                                <Color noteId={keys.note.id} changed={this.change} />
-                                <Archive note={keys.note.id} archievedDoneResposne={this.archieveResponse}/>
-                                <More noteId={keys.note.id} moreToAllNotes={this.deleteResponse} labelAdd={this.addLabelResponse}/>
-                            </CardActions>
+
+                        <div>
+                        </div>
+                        <CardActions className={viewFooter}>
+                            <Remainder noteId={keys.note.id} updateNote={this.reloadNote} />
+                            <Collaborator noteId={keys.note} collaboratorAdd={this.colabAdd} collaboratorDelete={this.clobaDelete} />
+                            <Color noteId={keys.note.id} changed={this.change} />
+                            <Archive note={keys.note.id} archievedDoneResposne={this.archieveResponse} />
+                            <More noteId={keys.note.id} moreToAllNotes={this.deleteResponse} labelAdd={this.addLabelResponse} />
+                        </CardActions>
                         </Card >
-                        <Dialog open={this.state.openDialog}  >
-                           {/* < Card className="note-dialog" style={{ boxShadow: "1px 1px 1px 1px",backgroundColor: "keys.note.colorCode" }} > */}
-                                <DialogContent >
-                                    <TextField
-                                        type="text"
-                                        multiline
-                                        value={this.state.title}
-                                        onChange={this.handleTitleChange}
-                                    /></DialogContent>
-                                <DialogContent>
-                                    <TextField
-                                        type="text"
-                                        multiline
-                                        value={this.state.description}
-                                        onChange={this.handleDescription}
-                                    /></DialogContent>
-                                <DialogActions>
-                                <Remainder noteId={keys.note.id} updateNote={this.reloadNote}/>
-                                <Collaborator noteId={keys.note} collaboratorAdd={this.colabAdd} collaboratorDelete={this.clobaDelete}/>
-                                <Color noteId={keys.note.id} changed={this.change} />
-                                <Archive note={keys.note.id} archievedDoneResposne={this.archieveResponse}/>
-                                <More noteId={keys.note.id} moreToAllNotes={this.deleteResponse} labelAdd={this.addLabelResponse}/>
-                                    <Button className="button-close" style={{ float: "right " }} onClick={this.closeDialog}>Close</Button>
-                                </DialogActions>
-                            {/* </Card > */}
-                        </Dialog>
+                    <Dialog open={this.state.openDialog}  >
+                        {/* < Card className="note-dialog" style={{ boxShadow: "1px 1px 1px 1px",backgroundColor: "keys.note.colorCode" }} > */}
+                        <DialogContent >
+                            <TextField
+                                type="text"
+                                multiline
+                                value={this.state.title}
+                                onChange={this.handleTitleChange}
+                            /></DialogContent>
+                        <DialogContent>
+                            <TextField
+                                type="text"
+                                multiline
+                                value={this.state.description}
+                                onChange={this.handleDescription}
+                            /></DialogContent>
+                        <DialogActions>
+                            <Remainder noteId={keys.note.id} updateNote={this.reloadNote} />
+                            <Collaborator noteId={keys.note} collaboratorAdd={this.colabAdd} collaboratorDelete={this.clobaDelete} />
+                            <Color noteId={keys.note.id} changed={this.change} />
+                            <Archive note={keys.note.id} archievedDoneResposne={this.archieveResponse} />
+                            <More noteId={keys.note.id} moreToAllNotes={this.deleteResponse} labelAdd={this.addLabelResponse} />
+                            <Button className="button-close" style={{ float: "right " }} onClick={this.closeDialog}>Close</Button>
+                        </DialogActions>
+                        {/* </Card > */}
+                    </Dialog>
                     </div >
             )
-        })
-        console.log("props",this.props.newNote);
-        
-        return (
-            <div className="allNotePage" >
-                <MuiThemeProvider theme={themes}>              
-                    {getAllNotes}
-                </MuiThemeProvider>
+    })
+    console.log("props", this.props.newNote);
+
+    return(
+            <div className = "allNotePage" >
+            <MuiThemeProvider theme={themes}>
+                {getAllNotes}
+            </MuiThemeProvider>
             </div >
         )
     }
