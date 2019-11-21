@@ -177,8 +177,7 @@ class RemainderNotesDisplay extends Component {
                         { keys.note.pinned === true? <UnPin noteId={keys.note.id} Unpin={this.pin}/> : <PinUnpin noteId={keys.note.id} pinUnpin={this.unpin}/>}                   
                             <div onClick={() => { this.handleClickTakeNote(keys.note) }}>
                                 <CardContent>
-                                    {keys.note.title}
-                                    
+                                    {keys.note.title}                        
                                      { keys.note.isPinned }                                        
                                           {keys.user.map((colab) => {
                                                 return (<div key={colab.colabId}>{colab === null ? '' :

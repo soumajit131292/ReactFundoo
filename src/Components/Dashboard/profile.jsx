@@ -7,7 +7,7 @@ class Profile extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            anchorEl: null,
+            anchorEl: false,
             dialog: false,
             box: false
         }
@@ -37,7 +37,7 @@ class Profile extends Component {
         return (
             <div>
                 <Tooltip title="profile" >
-                    <Avatar alt="Remy Sharp" src={this.state.file} onClick={this.handleClick}>{localStorage.getItem('userEmail')}
+                    <Avatar alt="Remy Sharp"  src={this.state.file} onClick={this.handleClick}>{localStorage.getItem('userEmail')}
                     </Avatar>
                 </Tooltip>
                 <Popper open={this.state.anchorEl} anchorEl={this.state.anchorEl} style={{

@@ -293,7 +293,7 @@ flex-direction: column;
   justify-content: center;
   align-items: center;
 flex-direction: row;
-background: cyan;
+background:honeydew;
 border-radius: 18px;
 /* -webkit-writing-mode: vertical-lr; */
 }
@@ -456,4 +456,15 @@ border-radius: 18px;
   justify-content: flex-start;
   align-items: flex-start;
   max-width:250px;
+}
+.viewIcon{
+  display : flex
+}
+@media only screen and (max-width: 600px)  {
+.viewIcon{
+  display : none
+}
+.right{
+  display:none
+}
 }

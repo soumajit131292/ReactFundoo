@@ -95,8 +95,6 @@ class Registration extends Component {
                 message: "Password length should be min 8"
             })
         }
-
-
         else {
             var userRegister = {
                 "firstName": this.state.firstName,
@@ -118,7 +116,6 @@ class Registration extends Component {
                     password: '',
                 });
                 this.props.history.push('/registersuccess');
-
             }).catch((err) => {
                 let msg = err.response.data.message;
                 console.log("error", err.response.data.message);

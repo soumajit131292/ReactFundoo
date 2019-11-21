@@ -208,6 +208,11 @@ class AllNotes extends Component {
         if (this.props.newNote)
             this.getNotes()
     }
+    handleClickAway=(e)=>{
+        this.setState({          
+            anchorEl: this.state.anchorEl ? !this.state.anchorEl : e.target
+        })
+    }
     render() {
         console.log("npoerlasdf", this.props.newNote);
         const viewNote = !this.props.show ? "note-display" : "fullbox-display"
@@ -221,7 +226,6 @@ class AllNotes extends Component {
                             <div onClick={() => { this.handleClickTakeNote(keys.note) }}>
                                 <CardContent>
                                     {keys.note.title}
-
                                     {/* {keys.note.isPinned} */}
                                 </CardContent>
                                 <CardContent>
@@ -229,7 +233,7 @@ class AllNotes extends Component {
                                 </CardContent>
                             </div>
                             <CardContent>
-                                <div className="avatar-colab">{keys.note.remainder === null ? '' : <Chip label={keys.note.remainder} onDelete={() => this.deleteRemainder(keys.note)} onClick={(e) => { this.pickerOpen(e) }} variant="outlined" />}
+                                <div className="avatar-colab">{keys.note.remainder === null ? '' : <Chip label={keys.note.remainder} onDelete={() => this.deleteRemainder(keys.note)} onClick={(e) => { this.pickerOpen(e,keys.note) }} variant="outlined" />}
                                     {keys.note.labels.map((labela) => {
                                         return (<div key={labela.id}>{labela === null ? '' :
                                             <Chip label={labela.labelName} onDelete={() => this.deleteLabel(labela)} variant="outlined" />}
@@ -244,9 +248,7 @@ class AllNotes extends Component {
                                         </Tooltip>}
                                         </div>);
                                     })}
-                                </div>
-                                
-                                
+                                </div>                              
                             <Popper open={this.state.anchorEl} anchorEl={this.state.anchorEl}
                                 style={{ marginTop: "5px", zIndex: "9999" }}>
                                 <ClickAwayListener onClickAway={this.handleClickAway}>
@@ -262,7 +264,6 @@ class AllNotes extends Component {
                                 </ClickAwayListener>
                             </Popper>
                             </CardContent>
-
                         <div>
                         </div>
                         <CardActions className={viewFooter}>
@@ -303,7 +304,6 @@ class AllNotes extends Component {
             )
     })
     console.log("props", this.props.newNote);
-
     return(
             <div className = "allNotePage" >
             <MuiThemeProvider theme={themes}>

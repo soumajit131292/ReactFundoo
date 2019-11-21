@@ -128,13 +128,12 @@ class Appbar extends Component {
                                 <img src={require('../../asserts/images/gooleKeep.png')}
                                     width="40px" height="40px" />
                             </div>
-                            <div style={{color: "#b71c1c" }}>
-                               
+                            <div style={{color: "#b71c1c" }}>                             
                                 {(this.props.location.state !== undefined) ? this.props.location.state : "Fundoo"}
                             </div>                           
                             <div className="search">
-                                <IconButton style={{ padding: "10px"}} >
-                                    <SearchIcon onClick={this.openChild}/>
+                                <IconButton style={{ padding: "10px",cursor: "pointer"}}  onClick={this.openChild}>
+                                    <SearchIcon />
                                 </IconButton>
                                 <InputBase
                                     style={{ width: "100%" }}
@@ -148,12 +147,12 @@ class Appbar extends Component {
                                 </IconButton>
                             </div>
                             <div className="right" >
-                                <IconButton style={{ padding: "10px" }}>
+                                {/* <IconButton style={{ padding: "10px" }}> */}
                                     <RefreshOutlinedIcon />
-                                </IconButton>
-                                <IconButton style={{paddingRight:"10px"}}>
-                                    {this.state.view ? <DashboardOutlinedIcon onClick={this.handleViewOpen} className="viewIcon" />
-                                        : <AppsOutlinedIcon onClick={this.handleViewOpen} className="viewIcon" />}
+                                {/* </IconButton> */}
+                                <IconButton style={{paddingRight:"10px"}} onClick={this.handleViewOpen}>
+                                    {this.state.view ? <DashboardOutlinedIcon  className="viewIcon" />
+                                        : <AppsOutlinedIcon  className="viewIcon" />}
                                 </IconButton>
                             </div>
                             <div className="profile" >
