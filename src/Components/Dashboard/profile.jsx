@@ -48,26 +48,31 @@ class Profile extends Component {
     }
     
     render() {
+        // let image=localStorage.getItem('profilePic')
+        //console.log('pic',localStorage.getItem('profilePic'))
+        console.log(localStorage.getItem('name'))
         return (
             <div>
-                <Tooltip title="profile" >
-                    <Avatar alt="Remy Sharp"   >{localStorage.getItem('userEmail')}
-                        <input
-                            multiple
-                            type='file' id='file'
-                            onChange={this.pickImage}  />
+                <Tooltip title={localStorage.getItem('name')} >
+                    <Avatar alt="Remy Sharp"  src={localStorage.getItem('profilePic')} onClick={this.handleClick} >
+                       
                     </Avatar>
+                    
                 </Tooltip>
-                {/* <Popper open={this.state.anchorEl} anchorEl={this.state.anchorEl} style={{
+                <Popper open={this.state.anchorEl} anchorEl={this.state.anchorEl} style={{
                         zIndex: "99999999", marginTop: "5px", position: "static"
                     }}>
                     <ClickAwayListener onClickAway={this.closeDialog}>
                        <Paper>
+                       <input
+                            multiple
+                            type='file' id='file'
+                            onChange={this.pickImage}  />
                             <MenuItem variant="contained" onClick={this.handleAccount}>No thanks</MenuItem>
                             <MenuItem variant="contained" onClick={this.handleSignOut}>Sign out</MenuItem>
                         </Paper>
                     </ClickAwayListener>
-                </Popper> */}
+                </Popper>
             </div >
         )
     }

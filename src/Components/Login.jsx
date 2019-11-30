@@ -51,7 +51,10 @@ Error:true,
                 "password": this.state.password,
             }
             console.log("login", userLoginDetails)
-            userLogin(userLoginDetails).then(res => {            
+            userLogin(userLoginDetails).then(res => {  
+                console.log('data',res.data)  
+                localStorage.setItem('profilePic',res.data.object.picture) 
+                localStorage.setItem('name',res.data.object.firstName)        
                 localStorage.setItem("token", res.data.token);
               localStorage.setItem("userEmail",this.state.email);
                 console.log(localStorage.getItem("userEmail"));
