@@ -5,12 +5,13 @@ const headers={
     'Content-Type': 'application/json',
     'token':localStorage.getItem('token')
 }
+
 export function Usercontroller(userRegister) {
     const baseUrl = process.env.REACT_APP_BASE_URL;
     let header = {
         'Content-Type': 'application/json'
     }
-    return axios.post("http://localhost:8080/" + 'user/register', userRegister, { header: header });
+    return axios.post("http://localhost:8082/" + 'user/register', userRegister, { header: header });
 }
 
 
@@ -22,7 +23,7 @@ export function userLogin(userLogin) {
     let header = {
         'Content-Type': 'application/json'
     }
-    return axios.post("http://localhost:8080/" + 'user/login', userLogin, { header: header });
+    return axios.post("http://localhost:8082/" + 'user/login', userLogin, { header: header });
 }
 export function emailVerify(userEmailVerify) {
     const baseUrl = process.env.BASE_URL;
@@ -30,7 +31,7 @@ export function emailVerify(userEmailVerify) {
     let header = {
         'Content-Type': 'application/json'
     }
-    return axios.post("http://localhost:8080/" + 'user/forgotpassword', userEmailVerify, { header: header });
+    return axios.post("http://localhost:8082/" + 'user/forgotpassword', userEmailVerify, { header: header });
 }
 
 export function userPasswordReset(userPassword,userToken) {
@@ -41,7 +42,7 @@ export function userPasswordReset(userPassword,userToken) {
     let header = {
         'Content-Type': 'application/json'
     }
-    return axios.put('http://localhost:8080/user/resetpassword/'+token, userPassword, { header: header });
+    return axios.put('http://localhost:8082/user/resetpassword/'+token, userPassword, { header: header });
 }
 
 export function userVerify(userToken) {
@@ -53,10 +54,14 @@ export function userVerify(userToken) {
         'Content-Type': 'application/json'
     }
     
-    return axios.put('http://localhost:8080/user/verify/'+token, null,{ header: header });  
+    return axios.put('http://localhost:8082/user/verify/'+token, null,{ header: header });  
 }
 
 export function getLoggedUser(){
-    return axios.get('http://localhost:8080/user/loggedinuser',{ headers : headers });
+    return axios.get('http://localhost:8082/user/loggedinuser',{ headers : headers });
 }
 
+export function uploadPic(formdata){
+    console.log("in userController",formdata.get('pic'))
+    return axios.post('http://localhost:8084/storage/uploadFile',formdata);
+}
