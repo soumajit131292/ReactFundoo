@@ -43,7 +43,6 @@ Error:true,
                 message: "Password should be min 8"
             })
         }
-
         else {
             var userLoginDetails = {
 
@@ -67,13 +66,8 @@ Error:true,
                     email: '',
                     password: '',
                 });
-
             })
-
-
-
         }
-
     }
     render() {
         return (
@@ -93,7 +87,6 @@ Error:true,
                     } />
                 <AppBar >
                     <Toolbar>
-
                         <Typography variant="h4" className='title' >
                             Fundoo Note App
                             </Typography>
@@ -111,13 +104,11 @@ Error:true,
                                     required
                                     id="email"
                                     label="email"
-
                                     type="email"
                                     margin="normal"
                                     variant="outlined"
                                     value={this.state.email}
                                     onChange={this.onChangeEmail}
-
                                 />
                             </div>
                             <div className="register-password">
@@ -126,14 +117,11 @@ Error:true,
                                     required
                                     id="password"
                                     label="password"
-
                                     type="password"
                                     margin="normal"
                                     variant="outlined"
                                     value={this.state.password}
                                     onChange={this.onChangePassword}
-
-
                                 />
                             </div>
                             <span style={{color: "#b71c1c" }}>{this.state.message}</span>
@@ -145,7 +133,6 @@ Error:true,
                                 <small><Link className="register-link" href="/registration">Sign up</Link></small>
                                 <small><Link className="forgot-link" href="/forgotpassword">Forgotten password?</Link></small>
                             </div>
-
                         </div>
                     </div>
                 </Card>

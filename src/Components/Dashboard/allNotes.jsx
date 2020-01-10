@@ -213,6 +213,7 @@ class AllNotes extends Component {
             anchorEl: this.state.anchorEl ? !this.state.anchorEl : e.target
         })
     }
+   
     render() {
         console.log("npoerlasdf", this.props.newNote);
         const viewNote = !this.props.show ? "note-display" : "fullbox-display"
@@ -243,7 +244,7 @@ class AllNotes extends Component {
                                 <div className="avatar-colab" >
                                     {keys.user.map((colab) => {
                                         return (<div key={colab.colabId}>{colab === null || colab.email === localStorage.getItem('userEmail') ? '' : <Tooltip title={colab.email} >
-                                            <Avatar alt="Remy Sharp" >C
+                                            <Avatar alt="Remy Sharp" >{colab.email.substring(0,1)}
                                         </Avatar>
                                         </Tooltip>}
                                         </div>);

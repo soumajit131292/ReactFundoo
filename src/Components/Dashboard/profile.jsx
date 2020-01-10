@@ -50,13 +50,15 @@ class Profile extends Component {
     render() {
         // let image=localStorage.getItem('profilePic')
         //console.log('pic',localStorage.getItem('profilePic'))
+        //src={localStorage.getItem('profilePic')}
         console.log(localStorage.getItem('name'))
         return (
             <div>
                 <Tooltip title={localStorage.getItem('name')} >
-                    <Avatar alt="Remy Sharp"  src={localStorage.getItem('profilePic')} onClick={this.handleClick} >
-                       
-                    </Avatar>
+                    { localStorage.getItem('profilePic') === null ?  localStorage.getItem('name').substring(0,1) : <Avatar alt="Remy Sharp"  src={localStorage.getItem('profilePic')} onClick={this.handleClick} >
+                       {localStorage.getItem('name').substring(0,1)}
+                    </Avatar> }
+                    
                     
                 </Tooltip>
                 <Popper open={this.state.anchorEl} anchorEl={this.state.anchorEl} style={{
